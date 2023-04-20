@@ -10,20 +10,20 @@ import (
 	"sync"
 	"time"
 
-	migrate "github.com/joncalhoun/migrate"
-	library "github.com/nocodeleaks/quepasa/library"
-	whatsmeow "github.com/nocodeleaks/quepasa/whatsmeow"
-	log "github.com/sirupsen/logrus"
-
 	"path/filepath"
 	"runtime"
 
 	"github.com/jmoiron/sqlx"
 	_ "github.com/mattn/go-sqlite3"
+
+	migrate "github.com/joncalhoun/migrate"
+	library "github.com/nocodeleaks/quepasa/library"
+	whatsmeow "github.com/nocodeleaks/quepasa/whatsmeow"
+	log "github.com/sirupsen/logrus"
 )
 
 type QpDatabase struct {
-	Config     QpDatabaseConfig
+	Config     QpDatabaseConfig `json:"config,omitempty"`
 	Connection *sqlx.DB
 	Users      QpDataUsersInterface
 	Servers    QpDataServersInterface
