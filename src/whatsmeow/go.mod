@@ -13,8 +13,8 @@ require (
 	github.com/mattn/go-sqlite3 v1.14.16
 	github.com/sirupsen/logrus v1.9.0
 	go.mau.fi/libsignal v0.1.0 // indirect
-	go.mau.fi/whatsmeow v0.0.0-20230407182255-e4dca20d3923
-	golang.org/x/crypto v0.7.0 // indirect
+	go.mau.fi/whatsmeow v0.0.0-20230416122908-c21751ee590a
+	golang.org/x/crypto v0.8.0 // indirect
 	golang.org/x/sys v0.7.0 // indirect
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 	google.golang.org/protobuf v1.30.0

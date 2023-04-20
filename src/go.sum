@@ -267,8 +267,8 @@ github.com/yuin/goldmark v1.1.27/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9de
 github.com/yuin/goldmark v1.1.32/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
 go.mau.fi/libsignal v0.1.0 h1:vAKI/nJ5tMhdzke4cTK1fb0idJzz1JuEIpmjprueC+c=
 go.mau.fi/libsignal v0.1.0/go.mod h1:R8ovrTezxtUNzCQE5PH30StOQWWeBskBsWE55vMfY9I=
-go.mau.fi/whatsmeow v0.0.0-20230407182255-e4dca20d3923 h1:JVYKyxwO7M6spjtRxBBCb852kr0lZCW36IK5Wv+/It4=
-go.mau.fi/whatsmeow v0.0.0-20230407182255-e4dca20d3923/go.mod h1:zoTtv1CupGEyTew7TOwnBmTbHB4pVad2OzjTf5CVwa0=
+go.mau.fi/whatsmeow v0.0.0-20230416122908-c21751ee590a h1:tUn2SrBfJXjaDl17MyMEn+7MqcI4WIlsd1+KuC0e+Bw=
+go.mau.fi/whatsmeow v0.0.0-20230416122908-c21751ee590a/go.mod h1:+ObGpFE6cbbY4hKc1FmQH9MVfqaemmlXGXSnwDvCOyE=
 go.opencensus.io v0.21.0/go.mod h1:mSImk1erAIZhrmZN+AvHh14ztQfjbGwt4TtuofqLduU=
 go.opencensus.io v0.22.0/go.mod h1:+kGneAE2xo2IficOXnaByMWTGM9T73dGwxeWcUqIpI8=
 go.opencensus.io v0.22.2/go.mod h1:yxeiOL68Rb0Xd1ddK5vPZ/oVn4vY4Ynel7k9FzqtOIw=
