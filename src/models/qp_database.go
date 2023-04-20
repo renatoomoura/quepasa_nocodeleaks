@@ -11,9 +11,9 @@ import (
 	"time"
 
 	migrate "github.com/joncalhoun/migrate"
-	log "github.com/sirupsen/logrus"
 	library "github.com/nocodeleaks/quepasa/library"
-	"github.com/nocodeleaks/quepasa/whatsmeow"
+	whatsmeow "github.com/nocodeleaks/quepasa/whatsmeow"
+	log "github.com/sirupsen/logrus"
 
 	"path/filepath"
 	"runtime"
