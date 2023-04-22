@@ -18,11 +18,13 @@ if [[ "${GOVERSION}" != *"${MINGOVERSION}"* ]]; then
     echo "Installing for arch ${ARCH}"
     wget "https://go.dev/dl/go${GOVERSIONTOINSTALL}.linux-${ARCH}.tar.gz" -O /usr/src/golang.tar.gz
     rm -rf /usr/local/go && tar -C /usr/local -xzf /usr/src/golang.tar.gz
-    GOPATH=/usr/local/go
-    PATH=$PATH:$GOPATH/bin
-    ln -sf ${GOPATH}/bin/go /usr/sbin/go
+    GOROOT=/usr/local/go
+    GOPATH=$HOME/go
+    PATH=$PATH:$GOROOT/bin
+    ln -sf ${GOROOT}/bin/go /usr/sbin/go
+    sed -nir '/^export GOROOT=/!p;$a export GOROOT='${GOROOT} ~/.bashrc
     sed -nir '/^export GOPATH=/!p;$a export GOPATH='${GOPATH} ~/.bashrc
-    sed -nir '/^export PATH=/!p;$a export PATH='$PATH:$GOPATH/bin ~/.bashrc
+    sed -nir '/^export PATH=/!p;$a export PATH='$PATH:$GOROOT/bin ~/.bashrc
     GOVERSION=`go version`
 
 fi
