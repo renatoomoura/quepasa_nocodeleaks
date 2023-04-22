@@ -7,7 +7,7 @@ echo 'Installation tested on fresh Ubuntu (20.04|22.04) (ARM64|AMD64)'
 echo 'Installing GCC'
 apt install gcc -y &>/dev/null
 
-GOVERSION=`go version`
+GOVERSION=`go version 2>/dev/null`
 if [[ "${GOVERSION}" != *"${MINGOVERSION}"* ]]; then
   
     echo 'Installing GO language'
@@ -16,7 +16,7 @@ if [[ "${GOVERSION}" != *"${MINGOVERSION}"* ]]; then
     ARCH=`dpkg --print-architecture`
 
     echo "Installing for arch ${ARCH}"
-    wget "https://go.dev/dl/go${GOVERSIONTOINSTALL}.linux-${ARCH}.tar.gz" -O /usr/src/golang.tar.gz
+    wget "https://go.dev/dl/go${GOVERSIONTOINSTALL}.linux-${ARCH}.tar.gz" -q -O /usr/src/golang.tar.gz
     rm -rf /usr/local/go && tar -C /usr/local -xzf /usr/src/golang.tar.gz
     GOROOT=/usr/local/go
     GOPATH=$HOME/go
@@ -24,7 +24,7 @@ if [[ "${GOVERSION}" != *"${MINGOVERSION}"* ]]; then
     ln -sf ${GOROOT}/bin/go /usr/sbin/go
     sed -nir '/^export GOROOT=/!p;$a export GOROOT='${GOROOT} ~/.bashrc
     sed -nir '/^export GOPATH=/!p;$a export GOPATH='${GOPATH} ~/.bashrc
-    sed -nir '/^export PATH=/!p;$a export PATH='$PATH:$GOROOT/bin ~/.bashrc
+    sed -nir '/^export PATH=/!p;$a export PATH='${PATH}:${GOROOT}/bin ~/.bashrc
     GOVERSION=`go version`
 
 fi
