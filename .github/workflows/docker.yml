@@ -13,7 +13,6 @@ on:
   push:
     branches: 
       - development
-      - "main"
 
 jobs:
   push_to_registry:
