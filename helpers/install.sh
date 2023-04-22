@@ -5,7 +5,7 @@ GOVERSIONTOINSTALL=1.20.3
 echo 'Installation tested on fresh Ubuntu (20.04|22.04) (ARM64|AMD64)'
 
 echo 'Installing GCC'
-apt install gcc -y
+apt install gcc -y &>/dev/null
 
 GOVERSION=`go version`
 if [[ "${GOVERSION}" != *"${MINGOVERSION}"* ]]; then
