@@ -1,23 +1,32 @@
 #!/bin/bash
+MINGOVERSION=1.20
+GOVERSIONTOINSTALL=1.20.3
+
 echo 'Installation tested on fresh Ubuntu (20.04|22.04) (ARM64|AMD64)'
 
 echo 'Installing GCC'
 apt install gcc -y
 
-echo 'Installing GO language'
+GOVERSION=`go version`
+if [[ "${GOVERSION}" != *"${MINGOVERSION}"* ]]; then
+  
+    echo 'Installing GO language'
 
-# for rpm versions rpm --eval '%{_arch}'
-ARCH=`dpkg --print-architecture`
+    # for rpm versions rpm --eval '%{_arch}'
+    ARCH=`dpkg --print-architecture`
 
-echo "Installing for arch ${ARCH}"
-wget https://go.dev/dl/go1.20.3.linux-${ARCH}.tar.gz
-rm -rf /usr/local/go && tar -C /usr/local -xzf go1.20.3.linux-${ARCH}.tar.gz
-GOPATH=/usr/local/go
-PATH=$PATH:$GOPATH/bin
-ln -sf ${GOPATH}/bin/go /usr/sbin/go
-sed -nir '/^export GOPATH=/!p;$a export GOPATH='${GOPATH} ~/.bashrc
-sed -nir '/^export PATH=/!p;$a export PATH='$PATH:$GOPATH/bin ~/.bashrc
-go version
+    echo "Installing for arch ${ARCH}"
+    wget "https://go.dev/dl/go${GOVERSIONTOINSTALL}.linux-${ARCH}.tar.gz" -O /usr/src/golang.tar.gz
+    rm -rf /usr/local/go && tar -C /usr/local -xzf /usr/src/golang.tar.gz
+    GOPATH=/usr/local/go
+    PATH=$PATH:$GOPATH/bin
+    ln -sf ${GOPATH}/bin/go /usr/sbin/go
+    sed -nir '/^export GOPATH=/!p;$a export GOPATH='${GOPATH} ~/.bashrc
+    sed -nir '/^export PATH=/!p;$a export PATH='$PATH:$GOPATH/bin ~/.bashrc
+    GOVERSION=`go version`
+
+fi
+echo "Installed Go Version ${GOVERSION}"
 
 echo 'Updating Quepasa link'
 ln -sf /opt/quepasa-source/src /opt/quepasa 
