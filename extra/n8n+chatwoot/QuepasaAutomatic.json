@@ -11,13 +11,13 @@
           ]
         }
       },
-      "id": "fb5139b0-6c59-47bf-8daf-637cc449340f",
+      "id": "8ffb234d-7ed3-40ff-9618-90ea18c2616f",
       "name": "Schedule Trigger",
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1,
       "position": [
-        540,
-        520
+        260,
+        480
       ]
     },
     {
@@ -26,39 +26,38 @@
         "query": "=INSERT INTO \"contacts\" (\"name\", \"identifier\", \"account_id\", \"created_at\", \"updated_at\", \"last_activity_at\") VALUES ('Quepasa Control', 'control@quepasa.io', {{ $json.account }}, NOW(), NOW(), NOW());",
         "additionalFields": {}
       },
-      "id": "6a16cd70-0786-48c8-bfa2-78b19a4f29f5",
+      "id": "c3ccf080-3a49-452d-863a-c0fcbae68213",
       "name": "Cria o Contato",
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 1,
       "position": [
-        1040,
-        640
+        1000,
+        600
       ],
-      "alwaysOutputData": true,
+      "alwaysOutputData": false,
       "credentials": {
         "postgres": {
           "id": "1",
           "name": "Postgres account"
         }
       },
-      "continueOnFail": true,
       "notes": "Sucesso"
     },
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "=INSERT INTO \"automation_rules\" (\"account_id\", \"name\", \"description\", \"event_name\", \"conditions\", \"actions\", \"created_at\", \"updated_at\", \"active\") VALUES ({{ $json.account }}, 'Start Quepasa', 'Start Quepasa', 'message_created', '[{\"values\": [\"/qrcode\"], \"attribute_key\": \"content\", \"filter_operator\": \"contains\", \"custom_attribute_type\": \"\"}]', '[{\"action_name\": \"send_webhook_event\", \"action_params\": [\"https://n8n.socialatendimento.com.br/webhook/quepasa\"]}, {\"action_name\": \"send_webhook_event\", \"action_params\": [\"https://n8n.socialatendimento.com.br/webhook-test/quepasa\"]}]', '2023-03-10 14:20:34.326753', '2023-03-10 14:20:34.326753', 'true');",
+        "query": "=INSERT INTO \"automation_rules\" (\"account_id\", \"name\", \"description\", \"event_name\", \"conditions\", \"actions\", \"created_at\", \"updated_at\", \"active\") VALUES ({{ $json.account }}, 'Start Quepasa', 'Start Quepasa', 'message_created', \n\n'[{\"values\": [\"control@quepasa.io\"], \"attribute_key\": \"identifier\", \"query_operator\": \"and\", \"filter_operator\": \"equal_to\", \"custom_attribute_type\": \"\"}, {\"values\": [\"outgoing\"], \"attribute_key\": \"message_type\", \"query_operator\": \"and\", \"filter_operator\": \"equal_to\", \"custom_attribute_type\": \"\"}, {\"values\": [\"/qrcode\"], \"attribute_key\": \"content\", \"filter_operator\": \"contains\", \"custom_attribute_type\": \"\"}]'\n\n, '[{\"action_name\": \"send_webhook_event\", \"action_params\": [\"{{ $node[\"Colocar Dados\"].json[\"URL N8N\"] }}/webhook/quepasa\"]}]', NOW(), NOW(), 'true');",
         "additionalFields": {}
       },
-      "id": "4c35a170-0a3b-4a3e-a5d6-ab8ae46e49c7",
+      "id": "49323e08-10b6-401a-9f12-5e0074877a7e",
       "name": "Cria Automação",
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 1,
       "position": [
-        1040,
-        420
+        1000,
+        380
       ],
-      "alwaysOutputData": true,
+      "alwaysOutputData": false,
       "notesInFlow": false,
       "credentials": {
         "postgres": {
@@ -66,7 +65,6 @@
           "name": "Postgres account"
         }
       },
-      "continueOnFail": true,
       "notes": "Sucesso"
     },
     {
@@ -75,22 +73,21 @@
         "query": "=SELECT \"accounts\".\"id\" AS \"account\" FROM \"accounts\" LEFT JOIN \"automation_rules\" ON \"accounts\".\"id\" = \"automation_rules\".\"account_id\" AND \"automation_rules\".\"name\" = 'Start Quepasa' WHERE \"automation_rules\".\"name\" IS NULL;",
         "additionalFields": {}
       },
-      "id": "7fe8640e-2196-426b-ad5b-28815ebc9208",
+      "id": "5d6485c3-364f-486b-935f-ee4a349bb1c7",
       "name": "Missing Automations",
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 1,
       "position": [
-        800,
-        420
+        760,
+        380
       ],
-      "alwaysOutputData": true,
+      "alwaysOutputData": false,
       "credentials": {
         "postgres": {
           "id": "1",
           "name": "Postgres account"
         }
       },
-      "continueOnFail": true,
       "notes": "Sucesso"
     },
     {
@@ -99,43 +96,47 @@
         "query": "=SELECT \"accounts\".\"id\" AS \"account\" FROM \"accounts\" LEFT JOIN \"contacts\" ON \"accounts\".\"id\" = \"contacts\".\"account_id\" AND \"contacts\".\"identifier\" = 'control@quepasa.io' WHERE \"contacts\".\"identifier\" IS NULL;",
         "additionalFields": {}
       },
-      "id": "f1e836f3-aabf-45e1-bfc9-1daeda52728f",
+      "id": "d6f3a0c7-bd74-4bae-b9fb-d348b4062d0f",
       "name": "Missing Quepasa Contact",
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 1,
       "position": [
-        800,
-        640
+        760,
+        600
       ],
-      "alwaysOutputData": true,
+      "alwaysOutputData": false,
       "credentials": {
         "postgres": {
           "id": "1",
           "name": "Postgres account"
         }
       },
-      "continueOnFail": true,
       "notes": "Sucesso"
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "URL N8N",
+              "value": "http://localhost:5678"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2ea7a326-7498-49e1-b8aa-5b410c7af460",
+      "name": "Colocar Dados",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        460,
+        480
+      ]
     }
   ],
   "pinData": {},
   "connections": {
-    "Schedule Trigger": {
-      "main": [
-        [
-          {
-            "node": "Missing Automations",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Missing Quepasa Contact",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Missing Automations": {
       "main": [
         [
@@ -157,14 +158,66 @@
           }
         ]
       ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Colocar Dados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Colocar Dados": {
+      "main": [
+        [
+          {
+            "node": "Missing Automations",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Missing Quepasa Contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
-  "active": true,
+  "active": false,
   "settings": {},
-  "versionId": "96a95d80-5cae-4318-a139-dd04c60bb67a",
-  "id": "5",
+  "versionId": "05f12a89-9b1e-44c7-b0ea-9c2f0c109025",
+  "id": "1",
   "meta": {
-    "instanceId": "cf33494a10c7fddb894ec4f480b7a0ef8832652eb98e75664a7d2731824deaf9"
+    "instanceId": "a37a29af0b164c10f8b7ef0e4d5577d19b80c64c836f6cd90dd302c84a178489"
   },
-  "tags": []
+  "tags": [
+    {
+      "createdAt": "2023-04-22T16:05:34.666Z",
+      "updatedAt": "2023-04-22T16:05:34.666Z",
+      "id": "1",
+      "name": "EngajamentoFlow"
+    },
+    {
+      "createdAt": "2023-04-22T16:05:34.674Z",
+      "updatedAt": "2023-04-22T16:05:34.674Z",
+      "id": "2",
+      "name": "QUEPASA"
+    },
+    {
+      "createdAt": "2023-04-22T16:05:34.697Z",
+      "updatedAt": "2023-04-22T16:05:34.697Z",
+      "id": "3",
+      "name": "SUFFICIT"
+    },
+    {
+      "createdAt": "2023-04-22T16:05:34.703Z",
+      "updatedAt": "2023-04-22T16:05:34.703Z",
+      "id": "4",
+      "name": "Versão 2.0"
+    }
+  ]
 }

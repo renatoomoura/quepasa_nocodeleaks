@@ -8,7 +8,7 @@
           "string": [
             {
               "name": "URL FORMADA",
-              "value": "=https://{{ $node[\"Colocando Dados\"].json[\"URL N8N\"] }}/webhook/from-chatwoot?qphost=https://{{ $node[\"Colocando Dados\"].json[\"URL DO QUEPASA\"] }}&qptoken={{ $node[\"Colocando Dados\"].json[\"TOKEN DO QUEPASA\"] }}&inbox={{ $node[\"Colocando Dados\"].json[\"NUMERO DO INBOX\"] }}&identifier={{ $node[\"Informa Identifier\"].json[\"identifier\"] }}&cwhost=https://{{ $node[\"Colocando Dados\"].json[\"URL CHATWOOT\"] }}&utoken={{ $node[\"Informa UToken\"].json[\"utoken\"] }}&atoken={{ $node[\"Garante AToken\"].json[\"atoken\"] }}&account={{ $node[\"Colocando Dados\"].json[\"ID DA CONTA\"] }}"
+              "value": "={{ $node[\"Colocando Dados\"].json[\"URL N8N\"] }}/webhook/from-chatwoot?qphost={{ $node[\"Colocando Dados\"].json[\"URL DO QUEPASA\"] }}&qptoken={{ $node[\"Colocando Dados\"].json[\"TOKEN DO QUEPASA\"] }}&inbox={{ $node[\"Colocando Dados\"].json[\"NUMERO DO INBOX\"] }}&identifier={{ $node[\"Informa Identifier\"].json[\"identifier\"] }}&cwhost={{ $node[\"Colocando Dados\"].json[\"URL CHATWOOT\"] }}&utoken={{ $node[\"Informa UToken\"].json[\"utoken\"] }}&atoken={{ $node[\"Garante AToken\"].json[\"atoken\"] }}&account={{ $node[\"Colocando Dados\"].json[\"ID DA CONTA\"] }}"
             }
           ]
         },
@@ -142,7 +142,7 @@
           "string": [
             {
               "value1": "={{ $json.status }}",
-              "value2": "unknown error"
+              "value2": "getting without filter"
             }
           ]
         }
@@ -368,7 +368,7 @@
         "token": "={{ $node[\"Colocando Dados\"].json[\"TOKEN DO QUEPASA\"] }}",
         "resource": "webhook",
         "operation": "setup",
-        "url": "=https://{{ $node[\"Colocando Dados\"].json[\"URL N8N\"] }}/webhook/to-chatwoot",
+        "url": "={{ $node[\"Colocando Dados\"].json[\"URL N8N\"] }}/webhook/to-chatwoot",
         "trackId": "chatwoot",
         "extraAttributes": {
           "attribute": [
@@ -378,7 +378,7 @@
             },
             {
               "key": "cwhost",
-              "value": "=https://{{ $node[\"Colocando Dados\"].json[\"URL CHATWOOT\"] }}"
+              "value": "={{ $node[\"Colocando Dados\"].json[\"URL CHATWOOT\"] }}"
             },
             {
               "key": "inbox",
@@ -398,7 +398,7 @@
             },
             {
               "key": "qphost",
-              "value": "=https://{{ $node[\"Colocando Dados\"].json[\"URL DO QUEPASA\"] }}"
+              "value": "={{ $node[\"Colocando Dados\"].json[\"URL DO QUEPASA\"] }}"
             },
             {
               "key": "qptoken",
@@ -537,7 +537,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 3,
       "position": [
-        2900,
+        2880,
         860
       ]
     },
@@ -611,15 +611,15 @@
     {
       "parameters": {
         "content": "## Verifica se esta tudo certo",
-        "height": 739.9015125242156,
-        "width": 1909.0097666254478
+        "height": 747.3699072394713,
+        "width": 2378.190762273796
       },
       "id": "b77c7106-da45-485b-a50d-8532990daa0f",
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        2580,
+        2560,
         340
       ]
     },
@@ -695,15 +695,19 @@
           "string": [
             {
               "name": "URL N8N",
-              "value": "https://n8n.socialatendimento.com.br"
+              "value": "http://localhost:5678"
             },
             {
               "name": "URL DO QUEPASA",
-              "value": "http://185.252.232.245:31000"
+              "value": "http://localhost:31000"
             },
             {
               "name": "URL CHATWOOT",
-              "value": "https://sender.socialatendimento.com.br"
+              "value": "http://localhost:3000"
+            },
+            {
+              "name": "Seu Email",
+              "value": "admin@admin.com.br"
             },
             {
               "name": "TOKEN DO QUEPASA",
@@ -745,6 +749,82 @@
         460
       ],
       "webhookId": "e8d38d79-8f79-4bd1-85f8-fce3d8200233"
+    },
+    {
+      "parameters": {
+        "url": "={{ $node[\"Colocando Dados\"].json[\"URL DO QUEPASA\"] }}/info ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "X-QUEPASA-TOKEN",
+              "value": "={{ $node[\"Colocando Dados\"].json[\"TOKEN DO QUEPASA\"] }}"
+            }
+          ]
+        },
+        "options": {
+          "redirect": {
+            "redirect": {
+              "followRedirects": true
+            }
+          }
+        }
+      },
+      "id": "d9bc14fb-a813-4ea2-8769-6304a1a83851",
+      "name": "Verifica INFO",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        4500,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ $node[\"Colocando Dados\"].json[\"URL DO QUEPASA\"] }}/info",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "X-QUEPASA-TOKEN",
+              "value": "={{ $node[\"Colocando Dados\"].json[\"TOKEN DO QUEPASA\"] }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "username",
+              "value": "={{ $node[\"Colocando Dados\"].json[\"Seu Email\"] }}"
+            }
+          ]
+        },
+        "options": {
+          "redirect": {
+            "redirect": {
+              "followRedirects": true
+            }
+          }
+        }
+      },
+      "id": "ac587b97-0f6c-4c38-8964-03e54651ac9d",
+      "name": "Ativa no Painel Quepasa",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        4700,
+        520
+      ]
     }
   ],
   "pinData": {},
@@ -1004,14 +1084,61 @@
           }
         ]
       ]
+    },
+    "Verifica INFO": {
+      "main": [
+        [
+          {
+            "node": "Ativa no Painel Quepasa",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Envia Mensagem De Conectado": {
+      "main": [
+        [
+          {
+            "node": "Verifica INFO",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": true,
   "settings": {},
-  "versionId": "47c85307-cffb-499a-9e8a-af2685c4f950",
+  "versionId": "544ad2ad-64f7-455b-87d9-bbe6c44c71f0",
   "id": "14",
   "meta": {
     "instanceId": "cf33494a10c7fddb894ec4f480b7a0ef8832652eb98e75664a7d2731824deaf9"
   },
-  "tags": []
+  "tags": [
+    {
+      "createdAt": "2023-03-27T10:14:31.447Z",
+      "updatedAt": "2023-03-27T10:14:31.447Z",
+      "id": "1",
+      "name": "SUFFICIT"
+    },
+    {
+      "createdAt": "2023-03-27T10:16:19.227Z",
+      "updatedAt": "2023-03-27T10:16:19.227Z",
+      "id": "2",
+      "name": "QUEPASA"
+    },
+    {
+      "createdAt": "2023-04-12T08:29:25.215Z",
+      "updatedAt": "2023-04-12T08:29:25.215Z",
+      "id": "11",
+      "name": "Versão 2.0"
+    },
+    {
+      "createdAt": "2023-03-27T10:16:36.815Z",
+      "updatedAt": "2023-03-27T10:16:36.815Z",
+      "id": "4",
+      "name": "EngajamentoFlow"
+    }
+  ]
 }

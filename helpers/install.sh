@@ -28,7 +28,7 @@ if [[ "${GOVERSION}" != *"${MINGOVERSION}"* ]]; then
     GOVERSION=`go version`
 
 fi
-echo "Installed Go Version ${GOVERSION}"
+echo "Installed ${GOVERSION}"
 
 echo 'Updating Quepasa link'
 ln -sf /opt/quepasa-source/src /opt/quepasa 
