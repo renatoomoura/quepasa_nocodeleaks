@@ -1,26 +1,16 @@
 version: '3'
 
-secrets:
-  pgpassword:
-    external: true
-  signing_secret:
-    external: true
-
 services:
 
   quepasa:
     image: quepasa
     container_name: "codeleaks-quepasa"
-    mem_limit: 4096M
-    env_file:
-      - ../helpers/.env
+    env_file: .env
     ports:
       - 31000:31000
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     build:
-      context: ./
-      dockerfile: ./Dockerfile
+      context: ../
+      dockerfile: ./docker/Dockerfile
     volumes:
       - ../src:/opt/quepasa
     restart: always
@@ -28,6 +18,8 @@ services:
     tty: true
     networks:
       - quepasa_network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
   
 networks:
   quepasa_network:

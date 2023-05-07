@@ -10,3 +10,5 @@ tmp
 .pre-commit-config.yaml
 .readthedocs.yml
 node_modules
+.n8n
+data

@@ -1,9 +1,21 @@
-FROM golang:1.19-stretch
+# Build stage
+FROM golang:1.20.2 as builder
 
-WORKDIR /usr/src/app/
-COPY . /usr/src/app/
-RUN chmod 755 /usr/src/app/docker-entrypoint.sh
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+WORKDIR /build
 
-ENTRYPOINT ["/usr/src/app/docker-entrypoint.sh"]
+COPY /docker/docker-entrypoint.sh .
+COPY /src/ .
+
+RUN chmod 755 docker-entrypoint.sh
+RUN go build -o service main.go
+
+# Run stage
+FROM golang:1.20.2 as src
+
+WORKDIR /opt/quepasa/
+
+COPY --from=builder /build/. /builder/
+COPY --from=builder /build/docker-entrypoint.sh /
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["sh"]

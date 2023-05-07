@@ -10,8 +10,14 @@
 name: Publish Docker Image
 
 on:
+  workflow_dispatch:
+  release:
+    types: [published]
   push:
-    branches: [ "main" ]
+    branches: 
+      - main
+    tags:
+      - v*
 
 jobs:
   push_to_registry:
@@ -36,7 +42,8 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
-          context: ./docker
+          context: .
+          file: docker/Dockerfile
           push: true
           tags: "latest"
           labels: ${{ steps.meta.outputs.labels }}
