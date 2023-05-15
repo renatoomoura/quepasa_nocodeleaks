@@ -2,6 +2,7 @@ package models
 
 import (
 	"database/sql"
+	"strings"
 
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
@@ -24,7 +25,11 @@ type QpDataServerSql struct {
 */
 
 func (source QpDataServerSql) FindForUser(token string, user string) (response *QpServer, err error) {
-	err = source.db.Get(&response, "SELECT * FROM servers WHERE token = ? AND user = ?", token, user)
+	err = source.db.Get(&response, "SELECT * FROM servers WHERE lower(token) = lower(?) AND lower(user) = lower(?)", token, user)
+	if response != nil {
+		response.Token = strings.ToLower(response.Token)
+		response.User = strings.ToLower(response.User)
+	}
 	return
 }
 
@@ -48,7 +53,11 @@ func (source QpDataServerSql) Exists(token string) (bool, error) {
 }
 
 func (source QpDataServerSql) FindByToken(token string) (response *QpServer, err error) {
-	err = source.db.Get(&response, "SELECT * FROM servers WHERE token = ?", token)
+	err = source.db.Get(&response, "SELECT * FROM servers WHERE lower(token) = lower(?)", token)
+	if response != nil {
+		response.Token = strings.ToLower(response.Token)
+		response.User = strings.ToLower(response.User)
+	}
 	return
 }
 

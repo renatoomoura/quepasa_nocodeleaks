@@ -2,13 +2,14 @@ package models
 
 import (
 	"fmt"
+	"strings"
 	"sync"
 	"time"
 
 	"github.com/google/uuid"
-	log "github.com/sirupsen/logrus"
 	library "github.com/nocodeleaks/quepasa/library"
 	whatsapp "github.com/nocodeleaks/quepasa/whatsapp"
+	log "github.com/sirupsen/logrus"
 )
 
 // Serviço que controla os servidores / bots individuais do whatsapp
@@ -269,9 +270,10 @@ func (service *QPWhatsappService) GetServersForUser(username string) (servers ma
 	return
 }
 
+// Case insensivity
 func (service *QPWhatsappService) FindByToken(token string) (*QpWhatsappServer, error) {
 	for _, server := range service.Servers {
-		if server.Token == token {
+		if server.Token == strings.ToLower(token) {
 			return server, nil
 		}
 	}
