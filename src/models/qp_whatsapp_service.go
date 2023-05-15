@@ -213,7 +213,6 @@ func (service *QPWhatsappService) GetOrCreateServer(user string, wid string) (re
 		}
 	}
 
-	// server.Disconnect("GetOrCreateServer")
 	result = server
 	return
 }
@@ -264,7 +263,7 @@ func (service *QPWhatsappService) GetServersForUser(username string) (servers ma
 	servers = make(map[string]*QpWhatsappServer)
 	for _, server := range service.Servers {
 		if server.GetOwnerID() == username {
-			servers[server.Token] = server
+			servers[strings.ToLower(server.Token)] = server
 		}
 	}
 	return
@@ -273,7 +272,7 @@ func (service *QPWhatsappService) GetServersForUser(username string) (servers ma
 // Case insensivity
 func (service *QPWhatsappService) FindByToken(token string) (*QpWhatsappServer, error) {
 	for _, server := range service.Servers {
-		if server.Token == strings.ToLower(token) {
+		if strings.ToLower(server.Token) == strings.ToLower(token) {
 			return server, nil
 		}
 	}

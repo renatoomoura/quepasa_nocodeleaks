@@ -8,7 +8,7 @@ import "time"
 </summary>
 */
 type QpServer struct {
-	// Public token (lowercase)
+	// Public token
 	Token string `db:"token" json:"token" validate:"max=100"`
 
 	// Whatsapp session id
