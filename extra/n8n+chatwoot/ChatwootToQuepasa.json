@@ -12,11 +12,11 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
       "position": [
-        -2220,
-        1920
+        -3080,
+        1360
       ],
       "webhookId": "ae8993fc-1ab0-4de5-90ce-0eb59a2b5c7d",
-      "id": "2621dbcc-415e-4a0d-af8b-fe0a9639ecd9"
+      "id": "c62a4200-be11-4caa-909d-88c51a6e83f6"
     },
     {
       "parameters": {
@@ -34,10 +34,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 1,
       "position": [
-        1420,
-        1400
+        680,
+        840
       ],
-      "id": "c381b2a5-3a63-43dc-8cdc-ef4d87678e6f"
+      "id": "77085b2e-0335-481f-b5e7-70909e19731b"
     },
     {
       "parameters": {
@@ -51,10 +51,10 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
       "position": [
-        -960,
-        3960
+        -1700,
+        3400
       ],
-      "id": "c2b12e6d-dc73-406e-a206-0834b9b2464d"
+      "id": "72c7dca8-ff8f-4542-8d02-aeebd3e87073"
     },
     {
       "parameters": {
@@ -68,10 +68,10 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
       "position": [
-        -280,
-        1800
+        -1020,
+        1240
       ],
-      "id": "fc875c24-165b-44cb-979a-d4fc5609b254"
+      "id": "a134597b-fbb3-4d4d-8202-6227dff5e2ed"
     },
     {
       "parameters": {
@@ -85,10 +85,10 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
       "position": [
-        -20,
-        1800
+        -760,
+        1240
       ],
-      "id": "d15d7eb7-dda6-459a-b971-faeba87b16c8"
+      "id": "67b5a677-3e2d-4ecc-978b-518e83680f12"
     },
     {
       "parameters": {
@@ -102,10 +102,10 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
       "position": [
-        240,
-        1800
+        -500,
+        1240
       ],
-      "id": "bc68f1bf-ac79-47c2-b4cd-a3b090a68693"
+      "id": "18db1515-1977-44af-8312-af6678a1db17"
     },
     {
       "parameters": {
@@ -132,10 +132,10 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 1,
       "position": [
-        -1980,
-        1920
+        -2720,
+        1360
       ],
-      "id": "d66c4112-d8ab-4f3c-96a5-99c85e27bc9f"
+      "id": "a395a070-223c-4f76-9ec4-7781c18dbb1e"
     },
     {
       "parameters": {},
@@ -143,34 +143,23 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        -920,
-        1560
+        -1660,
+        1000
       ],
-      "id": "a908b179-617e-4402-999f-7fc169e617d3"
-    },
-    {
-      "parameters": {},
-      "name": "Conversation Status Changed  Event",
-      "type": "n8n-nodes-base.noOp",
-      "typeVersion": 1,
-      "position": [
-        -920,
-        2320
-      ],
-      "id": "d47dd2ae-5b54-42c0-9052-2e6910fa7612"
+      "id": "f3f297a4-3ae4-4aa2-a047-8d3cfed92192"
     },
     {
       "parameters": {
-        "functionCode": "function hex2a(hexx) {\n    var hex = hexx.toString(); //force conversion\n    var str = '';\n    for (var i = 0; i < hex.length; i += 2)\n        str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));\n    return str;\n}\n\nlet response = [];\nfor(let index in items) \n{    \n  let body = items[index].json[\"body\"];\n  if(body) {     \n    let chatId = body.conversation.meta?.sender?.identifier;    \n    if(!chatId)\n    {\n      chatId = body.conversation.meta?.sender?.custom_attributes?.quepasa;\n      if(!chatId){\n        chatId = body.conversation.meta?.sender?.phone_number;\n        if(!chatId){\n          let chatIdEncrypted = body.conversation.contact_inbox.source_id;\n          chatId = hex2a(chatIdEncrypted)\n        }\n      }\n    }\n\n    // attachments\n    for(let message of body.conversation.messages) \n    {  \n      if(message.content){\n        const item = {        \n          token: items[index].json[\"query\"][\"token\"],\n          chatid: chatId,\n          sourceid: body.conversation.contact_inbox.source_id,\n          conversationid: body.conversation.id,\n          content: message.content,\n          sender: message.sender?.available_name || message.sender?.name || 'Auto Atendimento'\n        };\n        const msgItem = { \n          payload: item,\n          query: items[index].json[\"query\"]\n        };\n        response.push(msgItem);\n      }\n\n      if(message.attachments){\n        for(let attach of message.attachments) \n        {\n          const item = {\n            token: items[index].json[\"query\"][\"token\"],\n            chatid: chatId,            \n            attachment: attach.data_url\n          };\n          const msgItem = { \n            payload: item,\n            query: items[index].json[\"query\"]\n          };\n          response.push(msgItem);\n        }\n      }\n    }\n  }\n}\nreturn response;"
+        "functionCode": "function hex2a(hexx) {\n    var hex = hexx.toString(); //force conversion\n    var str = '';\n    for (var i = 0; i < hex.length; i += 2)\n        str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));\n    return str;\n}\n\nlet response = [];\nfor(let index in items) \n{    \n  const body = items[index].json[\"body\"];\n  if(body) {     \n    let chatId = body.conversation.meta?.sender?.identifier;    \n    if(!chatId)\n    {\n      chatId = body.conversation.meta?.sender?.custom_attributes?.quepasa;\n      if(!chatId){\n        chatId = body.conversation.meta?.sender?.phone_number;\n        if(!chatId){\n          let chatIdEncrypted = body.conversation.contact_inbox.source_id;\n          chatId = hex2a(chatIdEncrypted)\n        }\n      }\n    }\n\n    // attachments\n    for(let message of body.conversation.messages) \n    {  \n      if(message.content){\n\n        // leading with \\ at SHIFT+ENTER\n        message.content = message.content.replace(/\\n\\\\/g,\"\\n\").replace(/ \\\\/g,\"\");\n\n        const item = {        \n          token: items[index].json[\"query\"][\"token\"],\n          chatid: chatId,\n          sourceid: body.conversation.contact_inbox.source_id,\n          conversationid: body.conversation.id,\n          content: message.content,\n          sender: message.sender?.available_name || message.sender?.name || 'Auto Atendimento'\n        };\n        const msgItem = { \n          payload: item,\n          query: items[index].json[\"query\"]\n        };\n        response.push(msgItem);\n      }\n\n      if(message.attachments){\n        for(let attach of message.attachments) \n        {\n          const item = {\n            token: items[index].json[\"query\"][\"token\"],\n            chatid: chatId,            \n            attachment: attach.data_url\n          };\n          const msgItem = { \n            payload: item,\n            query: items[index].json[\"query\"]\n          };\n          response.push(msgItem);\n        }\n      }      \n    }\n  }\n}\nreturn response;"
       },
       "name": "Payload",
       "type": "n8n-nodes-base.function",
       "typeVersion": 1,
       "position": [
-        560,
-        1520
+        -180,
+        960
       ],
-      "id": "845f3d0c-bb67-4ef7-9475-acb7503e5f84"
+      "id": "b2ed975c-01b0-4bc0-8ce2-78f6317f0c2a"
     },
     {
       "parameters": {
@@ -183,13 +172,13 @@
           ]
         }
       },
-      "id": "aef1f6e0-7535-4e26-ae98-49a97759a67b",
+      "id": "a7e5fdbf-2d36-403f-99c4-25570e1ac1fc",
       "name": "Text Message ?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        800,
-        1520
+        60,
+        960
       ]
     },
     {
@@ -198,10 +187,10 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        -920,
-        2980
+        -1660,
+        2420
       ],
-      "id": "bb534d8c-6cff-4f6b-aaff-908a7925960f"
+      "id": "35dd44b1-2107-458f-8276-2baa21885274"
     },
     {
       "parameters": {
@@ -211,13 +200,13 @@
         "chatId": "={{$json.payload.chatid}}",
         "trackId": "chatwoot"
       },
-      "id": "09072d92-3d69-45a1-a59f-c68f659409f9",
+      "id": "06ba5d70-3c01-48cd-b3d6-a1fcee4733c1",
       "name": "Quepasa Send Text",
       "type": "n8n-nodes-quepasa.quepasa",
       "typeVersion": 1,
       "position": [
-        2500,
-        1620
+        1760,
+        1060
       ],
       "retryOnFail": true,
       "maxTries": 2
@@ -232,13 +221,13 @@
         "url": "={{$json.payload.attachment}}",
         "trackId": "chatwoot"
       },
-      "id": "dbfd305d-8f04-47fd-aa77-91dd4502afd6",
+      "id": "44ba3b85-bce5-4ad8-b920-ec52d8857fc8",
       "name": "Quepasa Send Attach",
       "type": "n8n-nodes-quepasa.quepasa",
       "typeVersion": 1,
       "position": [
-        2500,
-        1860
+        1760,
+        1300
       ],
       "retryOnFail": true,
       "maxTries": 2
@@ -261,13 +250,13 @@
         },
         "combineOperation": "any"
       },
-      "id": "bf380529-9d8f-42b2-844f-a9bc5359d64e",
+      "id": "830da963-b278-45a7-8e1f-d2d5cbd4763d",
       "name": "IF",
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        260,
-        1500
+        -480,
+        940
       ]
     },
     {
@@ -275,13 +264,13 @@
         "respondWith": "noData",
         "options": {}
       },
-      "id": "0193293e-6b3b-45d1-9d63-7a3ffbf91621",
+      "id": "10a41e78-ebf0-4646-88d8-533d64d6e967",
       "name": "Respond to Webhook",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
       "position": [
-        1680,
-        1020
+        940,
+        460
       ]
     },
     {
@@ -299,10 +288,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        2220,
-        1740
+        1480,
+        1180
       ],
-      "id": "21e012a1-c80a-4195-8c62-23ef07117604"
+      "id": "7392389d-117e-4663-908e-f48b72c9ee60"
     },
     {
       "parameters": {
@@ -315,10 +304,10 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
       "position": [
-        2780,
-        1740
+        2040,
+        1180
       ],
-      "id": "f86b0dc9-a770-41be-930b-454145e65d2c"
+      "id": "26bc597a-bc12-4517-8447-42fd01e49d4f"
     },
     {
       "parameters": {
@@ -343,23 +332,23 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        -540,
-        1560
+        -1280,
+        1000
       ],
-      "id": "7bf6ef22-a79b-48b5-bc1e-37ed87306a7d"
+      "id": "5a0947d9-599a-45b1-97aa-975dacf9197f"
     },
     {
       "parameters": {
         "respondWith": "noData",
         "options": {}
       },
-      "id": "bda84791-8171-4665-a36e-d2a7cd7613bc",
+      "id": "57fdf94b-9c67-49de-a262-f4dd956d2be0",
       "name": "Normal Exit (GNE)",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
       "position": [
-        40,
-        3000
+        -700,
+        2440
       ]
     },
     {
@@ -376,10 +365,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        -280,
-        1540
+        -1020,
+        980
       ],
-      "id": "9370b719-97a2-4517-875f-fb80da2bab58"
+      "id": "9b58e9fe-4f7b-474a-9256-cb3d1c25daa0"
     },
     {
       "parameters": {
@@ -402,24 +391,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        -20,
-        1520
+        -760,
+        960
       ],
-      "id": "0fa1e309-8cb9-453e-b2a3-e469b2da9d8d"
-    },
-    {
-      "parameters": {
-        "workflowId": "5"
-      },
-      "id": "2d94da4a-2819-4caf-9034-86db984b5aec",
-      "name": "Throw To Profile Update Workflow",
-      "type": "n8n-nodes-base.executeWorkflow",
-      "typeVersion": 1,
-      "position": [
-        -120,
-        2460
-      ],
-      "continueOnFail": true
+      "id": "c4b67af6-3725-42b1-be60-a49265544a6b"
     },
     {
       "parameters": {
@@ -433,26 +408,26 @@
           ]
         }
       },
-      "id": "45bc8f65-7437-48a3-a533-83dac6abbd85",
+      "id": "494fe48f-30d2-4bbd-a725-253872daeb57",
       "name": "If Control Message",
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        1100,
-        1380
+        360,
+        820
       ]
     },
     {
       "parameters": {
-        "workflowId": "6"
+        "workflowId": "={{ $env['C8Q_QUEPASACHATCONTROL'] }}"
       },
-      "id": "1ca7c7f2-70cc-4235-a61b-14293a3624f1",
+      "id": "e78e664f-b9b2-4f26-b085-1096a645f2df",
       "name": "Quepasa Chat Control Workflow",
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1,
       "position": [
-        1420,
-        1020
+        680,
+        460
       ],
       "continueOnFail": true
     },
@@ -467,13 +442,13 @@
           ]
         }
       },
-      "id": "3ce30833-98e8-42cc-8f08-eb532caad275",
+      "id": "e280c414-c894-46c6-af96-fb6eccb6922a",
       "name": "Sent by agent ?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        -580,
-        2980
+        -1320,
+        2420
       ],
       "notesInFlow": true,
       "notes": "Quando vem vazio é porque a conversa foi criada sem mensagem, no caso criado pelo fluxo. ou seja, criada pelo cliente."
@@ -505,26 +480,376 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 2,
       "position": [
-        -260,
-        2860
+        -1000,
+        2300
       ],
-      "id": "2380fbf1-f39c-4501-b90f-b75c64cd1fbb",
+      "id": "15bb2bb0-74b4-4030-a8fb-3d0271eeed97",
       "continueOnFail": true,
       "notes": "Important to use \"source_id\" to respond messages"
     },
     {
       "parameters": {
-        "workflowId": "1"
+        "workflowId": "={{ $env['C8Q_QUEPASAINBOXCONTROL'] }}"
       },
-      "id": "5cf1da55-5d05-405c-b604-c1301c0adcfc",
+      "id": "36ea9ae8-a248-4ca5-93f9-df44fa4e3113",
       "name": "Throw To Quepasa Inbox Control Workflow",
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1,
       "position": [
-        560,
-        1280
+        -180,
+        720
       ],
       "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{$json[\"body\"][\"event\"]}}",
+        "rules": {
+          "rules": [
+            {
+              "value2": "message_updated"
+            }
+          ]
+        },
+        "fallbackOutput": 3
+      },
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [
+        -2260,
+        3120
+      ],
+      "id": "36d11663-367e-40f9-b553-bb256ec602e9"
+    },
+    {
+      "parameters": {},
+      "id": "041fb7e8-8da1-45f8-9f53-a37fe35580e2",
+      "name": "Message Update Event",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -1660,
+        2820
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{$json.body?.content_attributes?.deleted??false}}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "31ee0c09-a14c-4af7-9057-29e2e0fdf451",
+      "name": "If Deleted ?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -1440,
+        2820
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "43d6419d-eea6-4ebf-8c68-e19253b2005a",
+      "name": "NoOp",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -1180,
+        2760
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "3eee2d06-5e9e-4fef-821c-6f69029e7b58",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1480,
+        960
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "db53be74-e311-47fb-9775-56d715c2894e",
+      "name": "No Operation, do nothing1",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        980,
+        980
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## POSTING THROW QUEPASA\n",
+        "height": 701.60213414902,
+        "width": 1034.409491520598
+      },
+      "id": "cbf2c20a-db76-4c2a-80d3-3bb724621b22",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1180,
+        820.4240879460162
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "query.qptoken",
+              "value": "={{ $json.query.qptoken ?? $json.query.identifier }}"
+            },
+            {
+              "name": "query.qphost",
+              "value": "={{ $json.query.qphost ?? 'http://localhost:31000' }}"
+            },
+            {
+              "name": "query.cwhost",
+              "value": "={{ $json.query.cwhost ?? 'http://localhost:3000' }}"
+            },
+            {
+              "name": "query.n8nhost",
+              "value": "={{ $json.query.n8nhost ?? 'http://localhost:5678' }}"
+            },
+            {
+              "name": "query.inbox",
+              "value": "={{ $json.query.inbox ?? $json.body.inbox_id ?? $json.body.inbox?.id }}"
+            },
+            {
+              "name": "query.account",
+              "value": "={{ $json.query.account ?? $json.body.account_id ?? $json.body.account?.id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d38f6d07-151d-4f52-bf64-8c703b9e5e56",
+      "name": "Defaults",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        -2900,
+        1360
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "noData",
+        "options": {}
+      },
+      "id": "b2d0296f-a08a-4d9e-a0eb-f5376bc14523",
+      "name": "Normal Exit (CUP)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        -1080,
+        1980
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "={{ $env['C8Q_CHATWOOTPROFILEUPDATE'] }}"
+      },
+      "id": "3b7df6c0-99d0-4a9f-b0db-ce41cbb5ff6e",
+      "name": "Throw To Profile Update Workflow",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        -1260,
+        1980
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.body.meta?.sender?.identifier ?? \"\" }}",
+              "operation": "notEqual",
+              "value2": "control@quepasa.io"
+            }
+          ]
+        }
+      },
+      "id": "6fc819d0-eb10-458f-8dd5-924bb19cc864",
+      "name": "If Not Control",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -1440,
+        1660
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "=SELECT csat_survey_enabled as enabled FROM inboxes WHERE id = {{ $json.query.inbox }}; ",
+        "additionalFields": {}
+      },
+      "id": "369b4720-a779-4a4a-ac4e-de650ee81550",
+      "name": "Enabled CSAT ?",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 1,
+      "position": [
+        -680,
+        1680
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "1",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "multiplex",
+        "options": {}
+      },
+      "id": "f1bb0e03-4ac3-4b06-b854-4c5c18fe7256",
+      "name": "Merge1",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2,
+      "position": [
+        -500,
+        1620
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "payload.chatid",
+              "value": "={{ $json.body.meta.sender.identifier }}"
+            },
+            {
+              "name": "payload.content",
+              "value": "-----------------------------------------------------\nSeu atendimento foi marcado como *concluído* !\nQualquer mensagem ou reação após este anúncio, irá iniciar uma *nova* conversa.\n-----------------------------------------------------"
+            },
+            {
+              "name": "query.qphost",
+              "value": "={{ $json.query.qphost }}"
+            },
+            {
+              "name": "query.qptoken",
+              "value": "={{ $json.query.qptoken }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b2be5dd8-1108-4a86-88cb-377328319fa0",
+      "name": "Payload Without CSAT",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        300,
+        1740
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "payload.chatid",
+              "value": "={{ $json.body.meta.sender.identifier }}"
+            },
+            {
+              "name": "query.qphost",
+              "value": "={{ $json.query.qphost }}"
+            },
+            {
+              "name": "query.qptoken",
+              "value": "={{ $json.query.qptoken }}"
+            },
+            {
+              "name": "payload.content",
+              "value": "=*{{ $json[\"body\"][\"meta\"][\"sender\"][\"name\"] }}* seu atendimento de Ticket de nº *{{ $json[\"body\"][\"messages\"][0][\"conversation_id\"] }}* foi finalizado ! Caso tenha alguma dúvida só enviar uma nova mensagem !\n\nAproveite e avalie nosso atendimento. Sua opinião é muito importante para nós e nos ajudará a identificar áreas de melhorias e continuar oferecendo um serviço de qualidade. 😎\n\nAvalie meu atendimento !\n{{ ($json.query.cwpublic ?? $json.query.cwhost).trimEnd('/') }}/survey/responses/{{ $json[\"uuid\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2f2cd393-7e81-4e90-9e6d-d3a6e1e02bfb",
+      "name": "Payload With CSAT",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        300,
+        1540
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "multiplex",
+        "options": {}
+      },
+      "id": "b9ee637a-5dab-445d-808a-92c3516735b6",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2,
+      "position": [
+        -140,
+        1640
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.enabled }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "4943baed-2b9c-4222-857a-093625bb04d5",
+      "name": "Use CSAT ?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        40,
+        1640
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.body.status }}",
+              "value2": "resolved"
+            }
+          ]
+        }
+      },
+      "id": "00c11773-f3a3-4992-ab01-2f3fd23f29c3",
+      "name": "If Conversation Resolved",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -1640,
+        1680
+      ]
     },
     {
       "parameters": {
@@ -563,73 +888,80 @@
         },
         "options": {}
       },
-      "id": "d8dd1654-f57f-421d-ba24-023b4826f863",
+      "id": "02861a94-9f67-4bdc-84c0-958935e4c4b3",
       "name": "Set Update Contact Payload",
       "type": "n8n-nodes-base.set",
       "typeVersion": 1,
       "position": [
-        -360,
-        2460
+        -1440,
+        1980
       ]
-    },
-    {
-      "parameters": {
-        "respondWith": "noData",
-        "options": {}
-      },
-      "id": "32490fdb-f8ad-4196-abe7-88d4e0e5ff19",
-      "name": "Normal Exit (CUP)",
-      "type": "n8n-nodes-base.respondToWebhook",
-      "typeVersion": 1,
-      "position": [
-        100,
-        2460
-      ]
-    },
-    {
-      "parameters": {
-        "functionCode": "function hex2a(hexx) {\n    var hex = hexx.toString(); //force conversion\n    var str = '';\n    for (var i = 0; i < hex.length; i += 2)\n        str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));\n    return str;\n}\n\nfor(let index in items) \n{ \n    if(items[index].json?.chatid){\n        continue;\n    }\n\n    let body = items[index].json[\"body\"];\n    if(body) \n    {\n        // trying to get from external identifier\n        let chatid = body.meta?.sender?.identifier;\n        if(!chatid)\n        {\n            // trying to get from quepasa custom property\n            chatid = body.meta?.sender?.custom_attributes?.quepasa;            \n            if(!chatid)\n            {\n                // trying to get from e-mail\n                chatid = body.meta?.sender?.email;            \n                if(!chatid)\n                {\n                    // trying to unhex from source_id\n                    if(body.contact_inbox?.source_id && body.contact_inbox.source_id.includes(\"@\")){\n                        chatid = hex2a(body.contact_inbox.source_id)\n                    }\n                    \n                    if(!chatid)\n                    {                    \n                        // trying to get from phone number\n                        chatid = body.meta?.sender?.phone_number;\n                    }\n                }\n            }\n        }\n        items[index].json.chatid = chatid;\n    }\n}\n\nreturn items;"
-      },
-      "name": "Getting ChatId From Custom|Email|Source|Phone",
-      "type": "n8n-nodes-base.function",
-      "typeVersion": 1,
-      "position": [
-        -600,
-        2460
-      ],
-      "id": "398b4fd8-f792-4c2b-8d08-8a99a0069198"
-    },
-    {
-      "parameters": {
-        "dataType": "string",
-        "value1": "={{$json[\"body\"][\"event\"]}}",
-        "rules": {
-          "rules": [
-            {
-              "value2": "message_updated"
-            }
-          ]
-        },
-        "fallbackOutput": 3
-      },
-      "name": "Switch",
-      "type": "n8n-nodes-base.switch",
-      "typeVersion": 1,
-      "position": [
-        -1520,
-        3680
-      ],
-      "id": "b4d370b0-73f9-4af7-82c4-35cb539857c6"
     },
     {
       "parameters": {},
-      "id": "a1da0e17-0c3d-4e44-a022-39a5cf910674",
-      "name": "Message Update Event",
+      "name": "Conversation Status Changed  Event",
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        -920,
-        3380
+        -2080,
+        1820
+      ],
+      "id": "006240fa-576f-49f6-a49e-da11ae12aa60"
+    },
+    {
+      "parameters": {
+        "content": "## POST RESOLVED MESSAGE\n* to disable, remove that link",
+        "height": 418.01663492117996,
+        "width": 2594.11159786878
+      },
+      "id": "60cc4810-250c-4a93-898f-b5428dec72dc",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1880,
+        1500
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "=SELECT uuid FROM conversations WHERE id = {{ $json.body.messages[0].conversation_id }};",
+        "additionalFields": {}
+      },
+      "id": "2a3d8d91-0d86-4f1b-bc4a-adb84af19d54",
+      "name": "Getting UUID",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        1700
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "1",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.body.custom_attributes?.skipevaluation }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "644d5fca-698d-4aee-845b-1b06b8dbc66c",
+      "name": "Skip Evaluate By Conversation",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -1060,
+        1540
       ]
     },
     {
@@ -637,169 +969,92 @@
         "conditions": {
           "boolean": [
             {
-              "value1": "={{$json.body?.content_attributes?.deleted??false}}",
+              "value1": "={{ $json.body.custom_attributes?.hasOwnProperty('skipevaluation') }}",
               "value2": true
             }
           ]
         }
       },
-      "id": "a88d71b3-f22a-4e3b-b117-54bd8929c182",
-      "name": "If Deleted ?",
+      "id": "77290a46-fd1b-4c30-a020-d4557dfeafd8",
+      "name": "Skip Evaluate By Conversation Is Setted",
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        -700,
-        3380
+        -1260,
+        1640
       ]
     },
     {
       "parameters": {},
-      "id": "ba4c2182-5b42-402b-8c8f-25b5e9a12873",
-      "name": "NoOp",
+      "id": "52aeaf13-f96a-440d-a2a1-3ae2d0260653",
+      "name": "No Operation, do nothing3",
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        -440,
-        3320
+        -840,
+        1600
       ]
     },
     {
       "parameters": {
         "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.body.meta?.sender?.custom_attributes?.hasOwnProperty('skipevaluation') }}",
+              "value2": true
+            }
+          ],
           "string": [
             {
-              "value1": "={{ $json.body.status }}",
-              "value2": "resolved"
+              "value1": "={{ $json.body.meta?.sender?.custom_attributes?.skipevaluation }}",
+              "operation": "isNotEmpty"
             }
           ]
         }
       },
-      "id": "6d9656d0-cd15-4188-8201-6f0f07a1484f",
-      "name": "If Conversation Resolved",
+      "id": "9f22238e-cf43-45b0-bcef-0526278556d9",
+      "name": "Skip Evaluation By Contact",
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        -600,
-        2180
-      ]
-    },
-    {
-      "parameters": {
-        "keepOnlySet": true,
-        "values": {
-          "string": [
-            {
-              "name": "payload.chatid",
-              "value": "={{ $json.body.meta.sender.identifier }}"
-            },
-            {
-              "name": "payload.content",
-              "value": "-----------------------------------------------------\nSeu atendimento foi marcado como *concluído* !\nQualquer mensagem ou reação após este anúncio, irá iniciar uma *nova* conversa.\n-----------------------------------------------------"
-            },
-            {
-              "name": "query.qphost",
-              "value": "={{ $json.query.qphost }}"
-            },
-            {
-              "name": "query.qptoken",
-              "value": "={{ $json.query.qptoken }}"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "c751369e-1b19-446c-b449-1bac8d58af90",
-      "name": "Set Resolved Payload",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 1,
-      "position": [
-        -40,
-        2140
+        -1060,
+        1740
       ]
     },
     {
       "parameters": {},
-      "id": "92c3d447-ab89-431f-b444-9967f98b5882",
-      "name": "No Operation, do nothing",
+      "id": "1f077525-7c05-4566-82df-9bfcb58cfb09",
+      "name": "Evaluation Message Payload Ready To Quepasa",
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        2220,
-        1520
+        540,
+        1640
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "function hex2a(hexx) {\n    var hex = hexx.toString(); //force conversion\n    var str = '';\n    for (var i = 0; i < hex.length; i += 2)\n        str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));\n    return str;\n}\n\nfor(let index in items) \n{ \n    if(items[index].json?.chatid){\n        continue;\n    }\n\n    let body = items[index].json[\"body\"];\n    if(body) \n    {\n        // trying to get from external identifier\n        let chatid = body.meta?.sender?.identifier;\n        if(!chatid)\n        {\n            // trying to get from quepasa custom property\n            chatid = body.meta?.sender?.custom_attributes?.quepasa;            \n            if(!chatid)\n            {\n                // trying to get from e-mail\n                chatid = body.meta?.sender?.email;            \n                if(!chatid)\n                {\n                    // trying to unhex from source_id\n                    if(body.contact_inbox?.source_id && body.contact_inbox.source_id.includes(\"@\")){\n                        chatid = hex2a(body.contact_inbox.source_id)\n                    }\n                    \n                    if(!chatid)\n                    {                    \n                        // trying to get from phone number\n                        chatid = body.meta?.sender?.phone_number;\n                    }\n                }\n            }\n        }\n        items[index].json.chatid = chatid;\n    }\n}\n\nreturn items;"
+      },
+      "id": "c2765eb9-5620-46e5-9fad-f56883685bb4",
+      "name": "Getting ChatId From Custom|Email|Source|Phone",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        -1640,
+        1980
       ]
     },
     {
       "parameters": {},
-      "id": "ef93f7d6-f994-4a5a-8c27-b202e5f2fd41",
-      "name": "No Operation, do nothing1",
+      "name": "Post Resolved Message",
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        1720,
-        1540
-      ]
-    },
-    {
-      "parameters": {},
-      "id": "d0f7770e-37a5-4d69-8d32-6e5e4215f635",
-      "name": "No Operation, do nothing2",
-      "type": "n8n-nodes-base.noOp",
-      "typeVersion": 1,
-      "position": [
-        1720,
-        2140
-      ]
-    },
-    {
-      "parameters": {
-        "content": "## POSTING THROW QUEPASA\n",
-        "height": 739.22713414902,
-        "width": 862.4094915205981
-      },
-      "id": "a413c0f2-09fc-4ac7-ac08-f9e374e68046",
-      "name": "Sticky Note",
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        2140,
-        1380.4240879460162
-      ]
-    },
-    {
-      "parameters": {
-        "content": "## POST RESOLVED MESSAGE\n* to disable, remove that link",
-        "height": 309.9487142819944,
-        "width": 961.5179310745352
-      },
-      "id": "5f1ef773-88df-430b-8048-746847da2ab9",
-      "name": "Sticky Note1",
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        -700,
-        2060
-      ]
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "string": [
-            {
-              "value1": "={{ $json.body.meta?.sender?.identifier ?? \"\" }}",
-              "operation": "notEqual",
-              "value2": "control@quepasa.io"
-            }
-          ]
-        }
-      },
-      "id": "392dc014-2abd-450a-96e4-7c9781276d31",
-      "name": "If Not Control",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 1,
-      "position": [
-        -320,
-        2160
-      ]
+        -1820,
+        1680
+      ],
+      "id": "bd2737c4-70c1-4eb4-9e8a-72ffd4f01fd7"
     }
   ],
   "pinData": {},
@@ -808,7 +1063,7 @@
       "main": [
         [
           {
-            "node": "Switch1",
+            "node": "Defaults",
             "type": "main",
             "index": 0
           }
@@ -1079,55 +1334,6 @@
         ]
       ]
     },
-    "Set Update Contact Payload": {
-      "main": [
-        [
-          {
-            "node": "Throw To Profile Update Workflow",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Conversation Status Changed  Event": {
-      "main": [
-        [
-          {
-            "node": "Getting ChatId From Custom|Email|Source|Phone",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "If Conversation Resolved",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Throw To Profile Update Workflow": {
-      "main": [
-        [
-          {
-            "node": "Normal Exit (CUP)",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Getting ChatId From Custom|Email|Source|Phone": {
-      "main": [
-        [
-          {
-            "node": "Set Update Contact Payload",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Switch": {
       "main": [
         [
@@ -1170,28 +1376,6 @@
         ]
       ]
     },
-    "If Conversation Resolved": {
-      "main": [
-        [
-          {
-            "node": "If Not Control",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Set Resolved Payload": {
-      "main": [
-        [
-          {
-            "node": "No Operation, do nothing2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "No Operation, do nothing": {
       "main": [
         [
@@ -1214,11 +1398,138 @@
         ]
       ]
     },
-    "No Operation, do nothing2": {
+    "Defaults": {
       "main": [
         [
           {
-            "node": "No Operation, do nothing",
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Throw To Profile Update Workflow": {
+      "main": [
+        [
+          {
+            "node": "Normal Exit (CUP)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enabled CSAT ?": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Payload Without CSAT": {
+      "main": [
+        [
+          {
+            "node": "Evaluation Message Payload Ready To Quepasa",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Payload With CSAT": {
+      "main": [
+        [
+          {
+            "node": "Evaluation Message Payload Ready To Quepasa",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Use CSAT ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Use CSAT ?": {
+      "main": [
+        [
+          {
+            "node": "Payload With CSAT",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Payload Without CSAT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Getting UUID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Conversation Resolved": {
+      "main": [
+        [
+          {
+            "node": "If Not Control",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Update Contact Payload": {
+      "main": [
+        [
+          {
+            "node": "Throw To Profile Update Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Conversation Status Changed  Event": {
+      "main": [
+        [
+          {
+            "node": "Getting ChatId From Custom|Email|Source|Phone",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Post Resolved Message",
             "type": "main",
             "index": 0
           }
@@ -1229,7 +1540,109 @@
       "main": [
         [
           {
-            "node": "Set Resolved Payload",
+            "node": "Skip Evaluate By Conversation Is Setted",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Getting UUID": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Skip Evaluate By Conversation Is Setted": {
+      "main": [
+        [
+          {
+            "node": "Skip Evaluate By Conversation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Skip Evaluation By Contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Skip Evaluate By Conversation": {
+      "main": [
+        [],
+        [
+          {
+            "node": "No Operation, do nothing3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "No Operation, do nothing3": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Enabled CSAT ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Skip Evaluation By Contact": {
+      "main": [
+        [],
+        [
+          {
+            "node": "No Operation, do nothing3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evaluation Message Payload Ready To Quepasa": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Getting ChatId From Custom|Email|Source|Phone": {
+      "main": [
+        [
+          {
+            "node": "Set Update Contact Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Post Resolved Message": {
+      "main": [
+        [
+          {
+            "node": "If Conversation Resolved",
             "type": "main",
             "index": 0
           }
@@ -1239,16 +1652,16 @@
   },
   "active": true,
   "settings": {},
-  "versionId": "05b2da31-fda4-4223-9526-51575eeeb5dd",
-  "id": "2",
+  "versionId": "b7d8ebe5-6987-4f1c-9ab2-0a0898a26853",
+  "id": "3",
   "meta": {
-    "instanceId": "2b4ab318d4f8eba20155e50db9998481bc305e3588e42ee69176091736c9d07e"
+    "instanceId": "a37a29af0b164c10f8b7ef0e4d5577d19b80c64c836f6cd90dd302c84a178489"
   },
   "tags": [
     {
-      "createdAt": "2022-10-13T04:02:06.783Z",
-      "updatedAt": "2022-10-13T04:02:06.783Z",
-      "id": "1",
+      "createdAt": "2023-04-22T16:05:34.697Z",
+      "updatedAt": "2023-04-22T16:05:34.697Z",
+      "id": "3",
       "name": "SUFFICIT"
     }
   ]

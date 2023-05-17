@@ -7,3 +7,27 @@
 [![Quepasa Inbox Control]](https://raw.githubusercontent.com/nocodeleaks/quepasa/main/extra/n8n%2Bchatwoot/QuepasaInboxControl.json)
 [![Quepasa Qrcode]](https://raw.githubusercontent.com/nocodeleaks/quepasa/main/extra/n8n%2Bchatwoot/QuepasaQrcode.json)
 [![Quepasa To Chatwoot]](https://raw.githubusercontent.com/nocodeleaks/quepasa/main/extra/n8n%2Bchatwoot/QuepasaToChatwoot.json)
+
+Use N8N Environment File to set these variables:
+(use your respectives ids)
+
+# enable a single conversation per contact, for all life time, not just a ticket
+C8Q_SINGLETHREAD=false
+
+# used by ChatwootToQuepasa
+C8Q_QUEPASAINBOXCONTROL=8
+
+# used by ChatwootToQuepasa | QuepasaToChatwoot
+C8Q_QUEPASACHATCONTROL=7
+
+# used by ChatwootToQuepasa
+C8Q_CHATWOOTPROFILEUPDATE=5
+
+# used by QuepasaToChatwoot
+C8Q_POSTTOCHATWOOT=6
+
+# used by QuepasaToChatwoot
+C8Q_POSTTOWEBCALLBACK=11
+
+# used by QuepasaToChatwoot
+C8Q_CHATWOOTTOQUEPASAGREETINGS=4

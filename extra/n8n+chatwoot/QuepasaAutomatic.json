@@ -3,25 +3,6 @@
   "nodes": [
     {
       "parameters": {
-        "rule": {
-          "interval": [
-            {
-              "field": "seconds"
-            }
-          ]
-        }
-      },
-      "id": "8ffb234d-7ed3-40ff-9618-90ea18c2616f",
-      "name": "Schedule Trigger",
-      "type": "n8n-nodes-base.scheduleTrigger",
-      "typeVersion": 1,
-      "position": [
-        260,
-        480
-      ]
-    },
-    {
-      "parameters": {
         "operation": "executeQuery",
         "query": "=INSERT INTO \"contacts\" (\"name\", \"identifier\", \"account_id\", \"created_at\", \"updated_at\", \"last_activity_at\") VALUES ('Quepasa Control', 'control@quepasa.io', {{ $json.account }}, NOW(), NOW(), NOW());",
         "additionalFields": {}
@@ -32,7 +13,7 @@
       "typeVersion": 1,
       "position": [
         1000,
-        600
+        580
       ],
       "alwaysOutputData": false,
       "credentials": {
@@ -102,7 +83,7 @@
       "typeVersion": 1,
       "position": [
         760,
-        600
+        580
       ],
       "alwaysOutputData": false,
       "credentials": {
@@ -133,6 +114,180 @@
         460,
         480
       ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "=SELECT DISTINCT \"accounts\".\"id\" AS \"account\" FROM \"accounts\" WHERE NOT EXISTS (SELECT NULL FROM \"custom_attribute_definitions\" WHERE \"account_id\" = \"accounts\".\"id\" AND \"attribute_key\" = 'skipgreetings' AND \"attribute_model\" = 1);",
+        "additionalFields": {}
+      },
+      "id": "592cee8d-6a0f-41d6-a9fc-651752f6ec22",
+      "name": "Missing Greetings For Contact",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 1,
+      "position": [
+        760,
+        820
+      ],
+      "alwaysOutputData": false,
+      "credentials": {
+        "postgres": {
+          "id": "1",
+          "name": "Postgres account"
+        }
+      },
+      "notes": "Sucesso"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "=INSERT INTO \"custom_attribute_definitions\" (\"attribute_display_name\", \"attribute_key\", \"attribute_display_type\", \"attribute_model\", \"account_id\", \"attribute_description\", \"attribute_values\", \"updated_at\", \"created_at\") VALUES ('Skip Greetings', 'skipgreetings', 7, 1, {{ $json.account }}, 'Não utilizar a saudação programada para este contato', '[]', NOW(), NOW());",
+        "additionalFields": {}
+      },
+      "id": "09cb634c-42da-481a-b32f-450d1482cda6",
+      "name": "Insert Skip Greetings Attribute",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 1,
+      "position": [
+        1000,
+        820
+      ],
+      "alwaysOutputData": false,
+      "credentials": {
+        "postgres": {
+          "id": "1",
+          "name": "Postgres account"
+        }
+      },
+      "notes": "Sucesso"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "id": "e98726c9-e5f4-486d-9ee5-7d1bf285bcc8",
+      "name": "Schedule Daily",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [
+        400,
+        1020
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "seconds"
+            }
+          ]
+        }
+      },
+      "id": "8ffb234d-7ed3-40ff-9618-90ea18c2616f",
+      "name": "Schedule By 30 Seconds",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "=SELECT DISTINCT \"accounts\".\"id\" AS \"account\" FROM \"accounts\" WHERE NOT EXISTS (SELECT NULL FROM \"custom_attribute_definitions\" WHERE \"account_id\" = \"accounts\".\"id\" AND \"attribute_key\" = 'skipevaluation' AND \"attribute_model\" = 1);",
+        "additionalFields": {}
+      },
+      "id": "a70a3bab-21dc-414b-88aa-064f65d78d63",
+      "name": "Missing Evaluation For Contact",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 1,
+      "position": [
+        760,
+        1020
+      ],
+      "alwaysOutputData": false,
+      "credentials": {
+        "postgres": {
+          "id": "1",
+          "name": "Postgres account"
+        }
+      },
+      "notes": "Sucesso"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "=INSERT INTO \"custom_attribute_definitions\" (\"attribute_display_name\", \"attribute_key\", \"attribute_display_type\", \"attribute_model\", \"account_id\", \"attribute_description\", \"attribute_values\", \"updated_at\", \"created_at\") VALUES ('Skip Greetings', 'skipevaluation', 7, 1, {{ $json.account }}, 'Não utilizar a saudação programada para este contato', '[]', NOW(), NOW());",
+        "additionalFields": {}
+      },
+      "id": "7c0dde50-05f2-433c-8d3e-cbf738eaedbf",
+      "name": "Insert Skip Evaluation For Contact Attribute",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 1,
+      "position": [
+        1000,
+        1020
+      ],
+      "alwaysOutputData": false,
+      "credentials": {
+        "postgres": {
+          "id": "1",
+          "name": "Postgres account"
+        }
+      },
+      "notes": "Sucesso"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "=SELECT DISTINCT \"accounts\".\"id\" AS \"account\" FROM \"accounts\" WHERE NOT EXISTS (SELECT NULL FROM \"custom_attribute_definitions\" WHERE \"account_id\" = \"accounts\".\"id\" AND \"attribute_key\" = 'skipevaluation' AND \"attribute_model\" = 0);",
+        "additionalFields": {}
+      },
+      "id": "8143af9e-128c-40cb-b6ec-2d29edf9b52f",
+      "name": "Missing Evaluation For Conversation",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 1,
+      "position": [
+        760,
+        1220
+      ],
+      "alwaysOutputData": false,
+      "credentials": {
+        "postgres": {
+          "id": "1",
+          "name": "Postgres account"
+        }
+      },
+      "notes": "Sucesso"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "=INSERT INTO \"custom_attribute_definitions\" (\"attribute_display_name\", \"attribute_key\", \"attribute_display_type\", \"attribute_model\", \"account_id\", \"attribute_description\", \"attribute_values\", \"updated_at\", \"created_at\") VALUES ('Skip Greetings', 'skipevaluation', 7, 0, {{ $json.account }}, 'Não utilizar a saudação programada para este contato', '[]', NOW(), NOW());",
+        "additionalFields": {}
+      },
+      "id": "e820cf22-4afa-42e5-9cc4-4e11d807f974",
+      "name": "Insert Skip Evaluation For Conversation Attribute",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 1,
+      "position": [
+        1000,
+        1220
+      ],
+      "alwaysOutputData": false,
+      "credentials": {
+        "postgres": {
+          "id": "1",
+          "name": "Postgres account"
+        }
+      },
+      "notes": "Sucesso"
     }
   ],
   "pinData": {},
@@ -159,17 +314,6 @@
         ]
       ]
     },
-    "Schedule Trigger": {
-      "main": [
-        [
-          {
-            "node": "Colocar Dados",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Colocar Dados": {
       "main": [
         [
@@ -185,11 +329,76 @@
           }
         ]
       ]
+    },
+    "Missing Greetings For Contact": {
+      "main": [
+        [
+          {
+            "node": "Insert Skip Greetings Attribute",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Daily": {
+      "main": [
+        [
+          {
+            "node": "Missing Greetings For Contact",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Missing Evaluation For Contact",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Missing Evaluation For Conversation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule By 30 Seconds": {
+      "main": [
+        [
+          {
+            "node": "Colocar Dados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Missing Evaluation For Contact": {
+      "main": [
+        [
+          {
+            "node": "Insert Skip Evaluation For Contact Attribute",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Missing Evaluation For Conversation": {
+      "main": [
+        [
+          {
+            "node": "Insert Skip Evaluation For Conversation Attribute",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
-  "active": false,
+  "active": true,
   "settings": {},
-  "versionId": "05f12a89-9b1e-44c7-b0ea-9c2f0c109025",
+  "versionId": "21201442-a59d-4e77-8edf-5aee04083ffa",
   "id": "1",
   "meta": {
     "instanceId": "a37a29af0b164c10f8b7ef0e4d5577d19b80c64c836f6cd90dd302c84a178489"

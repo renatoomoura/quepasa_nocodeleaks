@@ -3,13 +3,13 @@
   "nodes": [
     {
       "parameters": {},
-      "id": "7c0a44af-ad31-4bda-8a3f-75ca1066ccb5",
+      "id": "f0dfee98-3f60-4c09-9ee7-d7a23462259f",
       "name": "Start",
       "type": "n8n-nodes-base.start",
       "typeVersion": 1,
       "position": [
-        -220,
-        460
+        -1380,
+        1700
       ]
     },
     {
@@ -19,13 +19,13 @@
         "text": "={{$json.content}}",
         "chatId": "={{$json.chatid}}"
       },
-      "id": "0b4bfe29-8392-4d28-ba08-54871d324190",
+      "id": "530f112e-3461-459e-a2a5-b607f5fb84f9",
       "name": "Quepasa Send Welcome",
       "type": "n8n-nodes-quepasa.quepasa",
       "typeVersion": 1,
       "position": [
-        2100,
-        220
+        940,
+        1460
       ]
     },
     {
@@ -33,13 +33,13 @@
         "respondWith": "noData",
         "options": {}
       },
-      "id": "f6a2cd1a-ce66-4038-8ef9-2574230d7c4f",
+      "id": "073fc182-6d01-42ca-9171-419a7864ab38",
       "name": "Normal Exit (GNE)",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
       "position": [
-        1400,
-        540
+        240,
+        1780
       ]
     },
     {
@@ -57,11 +57,11 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        120,
-        460
+        -1040,
+        1700
       ],
       "alwaysOutputData": false,
-      "id": "bd875954-dd02-46c0-b75c-5f5fdda2f492"
+      "id": "13af0f1c-9a68-4bfd-a386-b78a0d22ffcc"
     },
     {
       "parameters": {
@@ -74,15 +74,15 @@
             },
             {
               "name": "qphost",
-              "value": "={{$json.extra.qphost}}"
+              "value": "={{ $json.extra.qphost ?? 'http://localhost:31000' }}"
             },
             {
               "name": "qptoken",
-              "value": "={{$json.extra.qptoken}}"
+              "value": "={{ $json.extra.qptoken ?? $json.extra.identifier }}"
             },
             {
               "name": "cwhost",
-              "value": "={{$json.extra.cwhost}}"
+              "value": "={{ $json.extra.cwhost ?? 'http://localhost:3000' }}"
             },
             {
               "name": "account",
@@ -96,17 +96,23 @@
               "name": "utoken",
               "value": "={{$json.extra.utoken}}"
             }
+          ],
+          "boolean": [
+            {
+              "name": "skipgreetings",
+              "value": "={{ $json.chat.chatwoot.skipgreetings ?? false }}"
+            }
           ]
         },
         "options": {}
       },
-      "id": "da729c43-1f82-4d8e-badd-dcb6c7bbc2eb",
+      "id": "3f5bbc96-449d-4056-b88e-d462a17b190d",
       "name": "Set Payload",
       "type": "n8n-nodes-base.set",
       "typeVersion": 1,
       "position": [
-        -60,
-        460
+        -1200,
+        1700
       ]
     },
     {
@@ -126,10 +132,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 1,
       "position": [
-        1400,
-        320
+        240,
+        1560
       ],
-      "id": "c043bba8-862a-4936-90d9-de532bc43d01"
+      "id": "b861c473-ea12-4011-860f-f7e9bc1a1eef"
     },
     {
       "parameters": {
@@ -149,10 +155,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 2,
       "position": [
-        480,
-        440
+        -680,
+        1680
       ],
-      "id": "c4e2a3c3-d155-460e-9962-c82fa4637cbd",
+      "id": "61eb093e-b6b0-4778-9f01-d54a64c159ab",
       "notes": "Important to use \"source_id\" to respond messages"
     },
     {
@@ -170,34 +176,34 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        1080,
-        340
+        -200,
+        1580
       ],
       "alwaysOutputData": false,
-      "id": "a25df06e-01ee-4e91-a6c6-60dba7650fe1"
+      "id": "b257c42b-fb88-4b01-884e-a5314681fd8f"
     },
     {
       "parameters": {
         "mode": "multiplex"
       },
-      "id": "c8da3b95-8acc-4e3e-972a-1cf81d0f27f6",
+      "id": "b6752317-372a-4688-880b-6f9cff5c54bf",
       "name": "Merge Extra + Greeting Content",
       "type": "n8n-nodes-base.merge",
       "typeVersion": 1,
       "position": [
-        1660,
-        220
+        500,
+        1460
       ]
     },
     {
       "parameters": {},
-      "id": "85374b0c-4754-42ee-8825-49889d059f6a",
+      "id": "f4c738d2-c30f-4278-b73a-641a7b85e6cf",
       "name": "NoOp",
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        1400,
-        140
+        240,
+        1380
       ]
     },
     {
@@ -206,50 +212,70 @@
         "combinationMode": "multiplex",
         "options": {}
       },
-      "id": "323e6b13-1cb1-4bed-9d7c-f236d54da5d5",
+      "id": "6f6a79d1-9e98-404d-b1dd-646eddb32e9a",
       "name": "Merge",
       "type": "n8n-nodes-base.merge",
       "typeVersion": 2,
       "position": [
-        760,
-        340
+        -400,
+        1580
       ]
     },
     {
       "parameters": {},
-      "id": "934f8518-c4e6-4885-b403-1af426359e18",
+      "id": "ec5af05e-1a59-4bc4-96cc-94a615730fbb",
       "name": "Waiting for inbox info",
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        480,
-        260
+        -680,
+        1500
       ]
     },
     {
       "parameters": {
         "errorMessage": "no chat id"
       },
-      "id": "cec84bd7-83bc-45f8-b187-2a27e34eeebb",
+      "id": "9fbbfc4a-f077-4a53-be2d-46cbaace6d7b",
       "name": "S&E - No Chat Id",
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        480,
-        660
+        -680,
+        1900
       ]
     },
     {
       "parameters": {
         "jsCode": "// Loop over input items and add a new field\n// called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  let value = item.json.content;\n  if (typeof value === 'string') {\n    value = value.replace(/\\*\\*/g,'*');\n    value = value.replace(/\\\\\\s/g,'\\r');\n  }\n  item.json.content = value;\n}\n\nreturn $input.all();"
       },
-      "id": "4dc9d541-db98-49be-bef3-d3b2466576a5",
+      "id": "060a2899-c439-438c-a4df-7eaa8ac617f0",
       "name": "Text Enchanted adjusts",
       "type": "n8n-nodes-base.code",
       "typeVersion": 1,
       "position": [
-        1880,
-        220
+        720,
+        1460
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.skipgreetings ?? false }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "95940920-c2b8-4d6d-8495-1dce5b0e3204",
+      "name": "Skip Greetings By Contact",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -20,
+        1460
       ]
     }
   ],
@@ -326,12 +352,7 @@
       "main": [
         [
           {
-            "node": "Greeting Message Content",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "NoOp",
+            "node": "Skip Greetings By Contact",
             "type": "main",
             "index": 0
           }
@@ -399,14 +420,31 @@
           }
         ]
       ]
+    },
+    "Skip Greetings By Contact": {
+      "main": [
+        [],
+        [
+          {
+            "node": "NoOp",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Greeting Message Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": false,
   "settings": {},
-  "versionId": "668137f7-584a-44f3-810d-028a2fba3c9b",
+  "versionId": "9882a9ff-3dbf-4d1d-91ef-6a3b823ad9d2",
   "id": "4",
   "meta": {
-    "instanceId": "2b4ab318d4f8eba20155e50db9998481bc305e3588e42ee69176091736c9d07e"
+    "instanceId": "a37a29af0b164c10f8b7ef0e4d5577d19b80c64c836f6cd90dd302c84a178489"
   },
   "tags": []
 }
