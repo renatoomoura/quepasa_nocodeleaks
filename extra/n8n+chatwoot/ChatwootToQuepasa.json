@@ -926,7 +926,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "=SELECT uuid FROM conversations WHERE id = {{ $json.body.messages[0].conversation_id }};",
+        "query": "=SELECT uuid FROM conversations WHERE id = {{ $json.body.id }};",
         "additionalFields": {}
       },
       "id": "2a3d8d91-0d86-4f1b-bc4a-adb84af19d54",
@@ -1652,7 +1652,7 @@
   },
   "active": true,
   "settings": {},
-  "versionId": "b7d8ebe5-6987-4f1c-9ab2-0a0898a26853",
+  "versionId": "8a2fceeb-a4b4-48c6-84cb-a65d3271876a",
   "id": "3",
   "meta": {
     "instanceId": "a37a29af0b164c10f8b7ef0e4d5577d19b80c64c836f6cd90dd302c84a178489"
