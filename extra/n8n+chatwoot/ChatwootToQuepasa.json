@@ -682,7 +682,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "=SELECT csat_survey_enabled as enabled FROM inboxes WHERE id = {{ $json.query.inbox }}; ",
+        "query": "=SELECT csat_survey_enabled FROM inboxes WHERE id = {{ $json.query.inbox }}; ",
         "additionalFields": {}
       },
       "id": "d98a4a79-85a2-4f35-b3b8-7be0ddb3b64c",
@@ -690,8 +690,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 1,
       "position": [
-        -1500,
-        3440
+        -1520,
+        3500
       ],
       "credentials": {
         "postgres": {
@@ -712,7 +712,7 @@
       "typeVersion": 2,
       "position": [
         -1320,
-        3380
+        3440
       ]
     },
     {
@@ -746,7 +746,7 @@
       "typeVersion": 1,
       "position": [
         -520,
-        3500
+        3480
       ]
     },
     {
@@ -780,7 +780,7 @@
       "typeVersion": 1,
       "position": [
         -520,
-        3300
+        3320
       ]
     },
     {
@@ -794,8 +794,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 2,
       "position": [
-        -960,
-        3400
+        -720,
+        3420
       ]
     },
     {
@@ -803,7 +803,7 @@
         "conditions": {
           "boolean": [
             {
-              "value1": "={{ $json.enabled }}",
+              "value1": "={{ $json.csat_survey_enabled }}",
               "value2": true
             }
           ]
@@ -814,8 +814,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        -780,
-        3400
+        -1120,
+        3460
       ]
     },
     {
@@ -921,8 +921,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 1,
       "position": [
-        -1140,
-        3460
+        -920,
+        3340
       ],
       "credentials": {
         "postgres": {
@@ -978,8 +978,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        -1660,
-        3360
+        -1680,
+        3420
       ]
     },
     {
@@ -1446,7 +1446,7 @@
       "main": [
         [
           {
-            "node": "Use CSAT ?",
+            "node": "Payload With CSAT",
             "type": "main",
             "index": 0
           }
@@ -1457,9 +1457,14 @@
       "main": [
         [
           {
-            "node": "Payload With CSAT",
+            "node": "Getting UUID",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
           }
         ],
         [
@@ -1475,12 +1480,7 @@
       "main": [
         [
           {
-            "node": "Merge",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Getting UUID",
+            "node": "Use CSAT ?",
             "type": "main",
             "index": 0
           }
@@ -1542,7 +1542,7 @@
           {
             "node": "Merge",
             "type": "main",
-            "index": 1
+            "index": 0
           }
         ]
       ]
@@ -1581,12 +1581,12 @@
       "main": [
         [
           {
-            "node": "Merge1",
+            "node": "Enabled CSAT ?",
             "type": "main",
             "index": 0
           },
           {
-            "node": "Enabled CSAT ?",
+            "node": "Merge1",
             "type": "main",
             "index": 0
           }
@@ -1652,7 +1652,7 @@
   },
   "active": true,
   "settings": {},
-  "versionId": "f15f3dfb-a892-406d-923d-345edd326f9d",
+  "versionId": "f153a466-5a3d-4d13-a04b-5a408d471635",
   "id": "2",
   "meta": {
     "instanceId": "2b4ab318d4f8eba20155e50db9998481bc305e3588e42ee69176091736c9d07e"
