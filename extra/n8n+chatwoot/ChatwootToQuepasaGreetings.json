@@ -24,8 +24,8 @@
       "type": "n8n-nodes-quepasa.quepasa",
       "typeVersion": 1,
       "position": [
-        940,
-        1460
+        1260,
+        1520
       ]
     },
     {
@@ -38,8 +38,8 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
       "position": [
-        240,
-        1780
+        460,
+        1720
       ]
     },
     {
@@ -122,7 +122,7 @@
           "string": [
             {
               "name": "content",
-              "value": "={{$json.greeting_message}}"
+              "value": "={{ $json.sendOutofOfficeMessage ? $json.out_of_office_message : $json.greeting_message }}"
             }
           ]
         },
@@ -132,8 +132,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 1,
       "position": [
-        240,
-        1560
+        660,
+        1600
       ],
       "id": "b861c473-ea12-4011-860f-f7e9bc1a1eef"
     },
@@ -166,7 +166,7 @@
         "conditions": {
           "boolean": [
             {
-              "value1": "={{$json.greeting_enabled}}",
+              "value1": "={{ $json.greeting_enabled ?? false }}",
               "value2": true
             }
           ]
@@ -176,8 +176,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        -200,
-        1580
+        260,
+        1600
       ],
       "alwaysOutputData": false,
       "id": "b257c42b-fb88-4b01-884e-a5314681fd8f"
@@ -191,19 +191,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 1,
       "position": [
-        500,
-        1460
-      ]
-    },
-    {
-      "parameters": {},
-      "id": "f4c738d2-c30f-4278-b73a-641a7b85e6cf",
-      "name": "NoOp",
-      "type": "n8n-nodes-base.noOp",
-      "typeVersion": 1,
-      "position": [
-        240,
-        1380
+        860,
+        1520
       ]
     },
     {
@@ -217,7 +206,7 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 2,
       "position": [
-        -400,
+        -480,
         1580
       ]
     },
@@ -254,8 +243,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 1,
       "position": [
-        720,
-        1460
+        1060,
+        1520
       ]
     },
     {
@@ -274,9 +263,78 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        -20,
-        1460
+        460,
+        1480
       ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field\n// called 'myNewField' to the JSON of each one\nfor (const dados of $input.all()) {\n  \n  //HugoSampaio: Ajuda a analisar problemas de timezone nao configurado\n  dados.json.horaAtual = $now.toFormat('H');\n  \n  for(let wo of dados.json[\"working_hours\"] ){\n    if ($today.weekday === wo.day_of_week){\n      if(wo.closed_all_day == true){\n        dados.json.sendOutofOfficeMessage = true;\n        break;\n      }\n  \n      \n      // opcional: hora do almoco\n      if($now.toFormat('H') == \"12\"){\n        dados.json.sendOutofOfficeMessage = true;\n        break;\n      }\n  \n  \n      if(wo.open_all_day == false){\n  \n        \n        if($now.toFormat('H') <= wo.open_hour  || $now.toFormat('H') >= wo.close_hour){\n          \n          // abertura\n          if($now.toFormat('H') == wo.open_hour){\n            if($now.toFormat('mm') < wo.open_minutes){\n              dados.json.sendOutofOfficeMessage = true;\n              break;\n            }else{\n              dados.json.sendOutofOfficeMessage = false;\n              break;\n            }\n          }\n          \n  \n          // fechamento\n          if($now.toFormat('H') == wo.close_hour){\n            if($now.toFormat('mm') >= wo.close_minutes){\n              dados.json.sendOutofOfficeMessage = true;\n              break;\n            }else{\n              dados.json.sendOutofOfficeMessage = false;\n              break;\n            }\n          }\n  \n          dados.json.sendOutofOfficeMessage = true;\n          break;\n         \n        }    \n      }\n    }\n  }\n}\n\nreturn $input.all();"
+      },
+      "id": "1dc477a2-1937-4be8-83c8-eb44b5e49857",
+      "name": "Calculate Working Hours",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        -120,
+        1480
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "noData",
+        "options": {}
+      },
+      "id": "801537bf-0baa-4b46-9e65-3f3df78954cc",
+      "name": "Normal Exit (GNF)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        660,
+        1380
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.working_hours_enabled ?? false }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "name": "Working Hours Enabled ?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        1580
+      ],
+      "alwaysOutputData": false,
+      "id": "7d0e7201-e31a-4c5d-b63b-233d1a3c7f6e"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.sendOutofOfficeMessage ?? false }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "name": "Should Send Out Of Office Message ?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        60,
+        1480
+      ],
+      "alwaysOutputData": false,
+      "id": "ebb1c83e-663c-44f0-88a2-07e163037874"
     }
   ],
   "pinData": {},
@@ -377,22 +435,11 @@
         ]
       ]
     },
-    "NoOp": {
-      "main": [
-        [
-          {
-            "node": "Merge Extra + Greeting Content",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Merge": {
       "main": [
         [
           {
-            "node": "Is Greeting Enabled ?",
+            "node": "Working Hours Enabled ?",
             "type": "main",
             "index": 0
           }
@@ -423,15 +470,68 @@
     },
     "Skip Greetings By Contact": {
       "main": [
-        [],
         [
           {
-            "node": "NoOp",
+            "node": "Normal Exit (GNF)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Greeting Message Content",
             "type": "main",
             "index": 0
           },
           {
-            "node": "Greeting Message Content",
+            "node": "Merge Extra + Greeting Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculate Working Hours": {
+      "main": [
+        [
+          {
+            "node": "Should Send Out Of Office Message ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Working Hours Enabled ?": {
+      "main": [
+        [
+          {
+            "node": "Calculate Working Hours",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Is Greeting Enabled ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Should Send Out Of Office Message ?": {
+      "main": [
+        [
+          {
+            "node": "Skip Greetings By Contact",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Is Greeting Enabled ?",
             "type": "main",
             "index": 0
           }
@@ -441,7 +541,7 @@
   },
   "active": false,
   "settings": {},
-  "versionId": "9882a9ff-3dbf-4d1d-91ef-6a3b823ad9d2",
+  "versionId": "fc827135-f5ad-476a-9816-7244448e0ad0",
   "id": "4",
   "meta": {
     "instanceId": "a37a29af0b164c10f8b7ef0e4d5577d19b80c64c836f6cd90dd302c84a178489"
