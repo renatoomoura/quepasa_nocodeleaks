@@ -16,10 +16,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        60,
-        1100
+        -320,
+        820
       ],
-      "id": "34aced58-fcb6-4199-90c6-91460fdcf6bb"
+      "id": "2983b09d-3e78-46a0-9c03-77f03847c11d"
     },
     {
       "parameters": {
@@ -37,10 +37,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 1,
       "position": [
-        260,
-        1160
+        -120,
+        880
       ],
-      "id": "8c96a828-b906-41e7-93ae-7192c3d027fa"
+      "id": "5f52c153-565f-4410-9277-fb9c9e624ea9"
     },
     {
       "parameters": {
@@ -56,10 +56,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 2,
       "position": [
-        2340,
-        1320
+        1960,
+        1040
       ],
-      "id": "0b54ebe0-f8be-4d74-8a5d-446660e28b34"
+      "id": "a23350ee-7404-4dbb-841d-bbb26c51a5da"
     },
     {
       "parameters": {
@@ -69,13 +69,13 @@
         "messageId": "={{$json[\"payload\"][\"echo_id\"]}}",
         "fileName": "={{$json[\"payload\"][\"attachment\"][\"filename\"]}}"
       },
-      "id": "6826fbfb-c9b5-41a0-aeb7-974777d5fbc0",
+      "id": "514d5518-026d-419a-95dd-3e2547a533ed",
       "name": "Quepasa Download Incoming",
       "type": "n8n-nodes-quepasa.quepasa",
       "typeVersion": 1,
       "position": [
-        940,
-        780
+        560,
+        500
       ],
       "continueOnFail": true
     },
@@ -97,33 +97,35 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 2,
       "position": [
-        2340,
-        1020
+        1960,
+        740
       ],
-      "id": "566924fa-5b72-47d1-a928-b7d7b7f19705"
+      "id": "3aa049eb-d8bc-4852-99e7-aee8b0299213",
+      "retryOnFail": true,
+      "waitBetweenTries": 2000
     },
     {
       "parameters": {},
-      "id": "504957a1-0e1a-4af2-ad13-39c6ed618b7a",
+      "id": "d44bc7d3-795f-4270-9692-fcab92323494",
       "name": "When Called By Another Workflow",
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1,
       "position": [
-        -840,
-        1080
+        -1220,
+        800
       ]
     },
     {
       "parameters": {
         "jsCode": "function a2hex(str) {\n  var arr = [];\n  for (var i = 0, l = str.length; i < l; i ++) {\n    var hex = Number(str.charCodeAt(i)).toString(16);\n    arr.push(hex);\n  }\n  return arr.join('');\n}\n\nfor (const item of $input.all()) {\n  if (item.json.chatid) {\n    item.json.hex = a2hex(item.json.chatid);\n  }\n}\n\nreturn $input.all();"
       },
-      "id": "67b94667-e82d-40a1-8eca-454a5a42586a",
+      "id": "2c58a05c-e4c5-4e88-9a1e-3c35300c399e",
       "name": "Hex Chat Ids",
       "type": "n8n-nodes-base.code",
       "typeVersion": 1,
       "position": [
-        -380,
-        1000
+        -760,
+        720
       ]
     },
     {
@@ -179,13 +181,13 @@
         },
         "options": {}
       },
-      "id": "7c8d4329-05cb-42c9-bbbd-c3e4c7b538c1",
+      "id": "fc4c50bf-1b91-4820-9530-52a4485fc3b8",
       "name": "Filter Source Payload",
       "type": "n8n-nodes-base.set",
       "typeVersion": 1,
       "position": [
-        -180,
-        1100
+        -560,
+        820
       ]
     },
     {
@@ -199,13 +201,13 @@
           ]
         }
       },
-      "id": "e767280b-4e29-4c89-a0e7-d430b084b2b1",
+      "id": "db2b4e4b-b7b5-4b4d-aedd-64489efdb6b5",
       "name": "If Not Hex|Source ID ?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        -620,
-        1080
+        -1000,
+        800
       ]
     },
     {
@@ -223,10 +225,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        460,
-        1080
+        80,
+        800
       ],
-      "id": "56bb55b0-ea7e-4ab9-896a-def0e1cfd226"
+      "id": "0cacf1ae-d007-4a2c-8316-a8d38d1334e1"
     },
     {
       "parameters": {
@@ -234,13 +236,13 @@
         "combinationMode": "multiplex",
         "options": {}
       },
-      "id": "c341e191-7c95-469f-b982-f0cbe7281149",
+      "id": "0c68a6c9-f904-4ce7-85f4-0b2f29c974bf",
       "name": "Merge",
       "type": "n8n-nodes-base.merge",
       "typeVersion": 2,
       "position": [
-        1620,
-        980
+        1240,
+        700
       ]
     },
     {
@@ -254,35 +256,35 @@
           ]
         }
       },
-      "id": "3ad60961-80dc-4067-8f81-3e68aa98a1a2",
+      "id": "576bf89b-73e2-47c4-a5c8-38dc5597c30c",
       "name": "Post Incomming With Attachment ?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        2080,
-        1160
+        1700,
+        880
       ]
     },
     {
       "parameters": {},
-      "id": "596df234-15e5-44ce-a1d7-27e57929db22",
+      "id": "53d1b2bb-cc56-4fe2-8402-57dd499fb051",
       "name": "(In) Attachment",
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        660,
-        1000
+        280,
+        720
       ]
     },
     {
       "parameters": {},
-      "id": "bbf215f9-909b-4248-9cab-46a737a3200e",
+      "id": "f73bef55-4899-45d9-a368-e4f7a24fc3dd",
       "name": "(In) Text Message",
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        660,
-        1160
+        280,
+        880
       ]
     },
     {
@@ -297,13 +299,13 @@
         },
         "options": {}
       },
-      "id": "0d2a7ecb-7f7d-428a-b09d-c002502a6a05",
+      "id": "d5af3b76-4205-476c-82a9-b253e9502889",
       "name": "(In) Prepend error on content",
       "type": "n8n-nodes-base.set",
       "typeVersion": 1,
       "position": [
-        1420,
-        760
+        1040,
+        480
       ]
     },
     {
@@ -317,13 +319,13 @@
           ]
         }
       },
-      "id": "44ae6b85-b253-4749-bf5b-0ede6080aa63",
+      "id": "5b58eaab-152f-4d7e-84d7-dd6b0930c86f",
       "name": "(In) Error On Get Attach ?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        1140,
-        780
+        760,
+        500
       ]
     },
     {
@@ -337,13 +339,13 @@
           ]
         }
       },
-      "id": "2521a6b0-6ee8-4c0c-92e2-6baacff28696",
+      "id": "d3cd4f14-cab0-4c6c-9fc8-433819e698dd",
       "name": "If Not Empty Content ?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        900,
-        1180
+        520,
+        900
       ]
     },
     {
@@ -358,24 +360,24 @@
         },
         "options": {}
       },
-      "id": "cf8f2009-e1f0-43ae-bc95-fbd1b89a723f",
+      "id": "38d9050f-52cf-4c33-95b8-e893b368b63c",
       "name": "Set Custom Content",
       "type": "n8n-nodes-base.set",
       "typeVersion": 1,
       "position": [
-        1100,
-        1240
+        720,
+        960
       ]
     },
     {
       "parameters": {},
-      "id": "8636ea17-22ea-48a0-92d3-4bdbe06a2152",
+      "id": "32ab2d49-bb00-4e0c-8448-df68818d8906",
       "name": "(In) Text Message Following",
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        1280,
-        1160
+        900,
+        880
       ]
     },
     {
@@ -389,13 +391,28 @@
         },
         "options": {}
       },
-      "id": "391630c4-6227-4617-8444-a95e74a50fe0",
+      "id": "a2a4b866-3b3d-4368-98f1-dd6109fcae5d",
       "name": "Filter Post To Chatwoot Payload",
       "type": "n8n-nodes-base.set",
       "typeVersion": 1,
       "position": [
-        1860,
-        1160
+        1480,
+        880
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Fail Retry \nImportant to retry on fail because if you are using any external storage, it will try to save at this time.\nSo you need to ensure success ...",
+        "height": 347.0509255000625,
+        "width": 258.1602840291324
+      },
+      "id": "fcfd7945-4810-4f0d-a399-0a93d56338f0",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1880,
+        580
       ]
     }
   ],
@@ -649,7 +666,7 @@
   },
   "active": false,
   "settings": {},
-  "versionId": "108ae037-718b-40b7-88ab-f5abc7ed22c7",
+  "versionId": "b282335c-d4aa-431f-bb62-bfe4914215ad",
   "id": "7",
   "meta": {
     "instanceId": "2b4ab318d4f8eba20155e50db9998481bc305e3588e42ee69176091736c9d07e"
