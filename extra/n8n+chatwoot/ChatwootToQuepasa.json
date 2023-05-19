@@ -24,7 +24,7 @@
           "string": [
             {
               "name": "payload.content",
-              "value": "=*{{$json.payload.sender}}*: {{$json.payload.content}}"
+              "value": "={{ $json.payload.sender ? '*' + $json.payload.sender.trim() + '*: ' : '' }}{{ $json.payload.content }}"
             }
           ]
         },
@@ -599,15 +599,15 @@
             },
             {
               "name": "query.qphost",
-              "value": "={{ $json.query.qphost ?? 'http://localhost:31000' }}"
+              "value": "={{ $json.query.qphost ?? 'http://127.0.0.1:31000' }}"
             },
             {
               "name": "query.cwhost",
-              "value": "={{ $json.query.cwhost ?? 'http://localhost:3000' }}"
+              "value": "={{ $json.query.cwhost ?? 'http://127.0.0.1:3000' }}"
             },
             {
               "name": "query.n8nhost",
-              "value": "={{ $json.query.n8nhost ?? 'http://localhost:5678' }}"
+              "value": "={{ $json.query.n8nhost ?? 'http://127.0.0.1:5678' }}"
             },
             {
               "name": "query.inbox",
@@ -913,7 +913,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "=SELECT uuid FROM conversations WHERE display_id = {{ $json.body.id }};",
+        "query": "=SELECT uuid FROM conversations WHERE account_id = {{ $json.query.account }} and display_id = {{ $json.body.id }};",
         "additionalFields": {}
       },
       "id": "9db21a24-d5d7-4273-9491-8c4cb2559a3e",
@@ -1652,7 +1652,7 @@
   },
   "active": true,
   "settings": {},
-  "versionId": "f153a466-5a3d-4d13-a04b-5a408d471635",
+  "versionId": "8fe5f424-ff19-406e-8755-0c5a93298049",
   "id": "2",
   "meta": {
     "instanceId": "2b4ab318d4f8eba20155e50db9998481bc305e3588e42ee69176091736c9d07e"

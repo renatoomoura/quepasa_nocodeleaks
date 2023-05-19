@@ -3,13 +3,13 @@
   "nodes": [
     {
       "parameters": {},
-      "id": "f0dfee98-3f60-4c09-9ee7-d7a23462259f",
+      "id": "c3086449-899f-48a9-a488-d8223d6799a9",
       "name": "Start",
       "type": "n8n-nodes-base.start",
       "typeVersion": 1,
       "position": [
-        -1380,
-        1700
+        -2340,
+        340
       ]
     },
     {
@@ -17,15 +17,16 @@
         "baseUrl": "={{$json.qphost}}",
         "token": "={{$json.qptoken}}",
         "text": "={{$json.content}}",
-        "chatId": "={{$json.chatid}}"
+        "chatId": "={{$json.chatid}}",
+        "trackId": "chatwoot"
       },
-      "id": "530f112e-3461-459e-a2a5-b607f5fb84f9",
+      "id": "64640cb7-ddd9-4c4e-a5ad-9aee75663937",
       "name": "Quepasa Send Welcome",
       "type": "n8n-nodes-quepasa.quepasa",
       "typeVersion": 1,
       "position": [
-        1260,
-        1520
+        300,
+        160
       ]
     },
     {
@@ -33,13 +34,13 @@
         "respondWith": "noData",
         "options": {}
       },
-      "id": "073fc182-6d01-42ca-9171-419a7864ab38",
+      "id": "04b59ef5-836c-46ca-a656-9f0b7a499a5d",
       "name": "Normal Exit (GNE)",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
       "position": [
-        460,
-        1720
+        -500,
+        360
       ]
     },
     {
@@ -57,11 +58,11 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        -1040,
-        1700
+        -2000,
+        340
       ],
       "alwaysOutputData": false,
-      "id": "13af0f1c-9a68-4bfd-a386-b78a0d22ffcc"
+      "id": "cffe3d56-86c8-45c0-9e92-03f15219ddc7"
     },
     {
       "parameters": {
@@ -106,13 +107,13 @@
         },
         "options": {}
       },
-      "id": "3f5bbc96-449d-4056-b88e-d462a17b190d",
+      "id": "0a532f47-e534-498a-850b-8196fff3b20e",
       "name": "Set Payload",
       "type": "n8n-nodes-base.set",
       "typeVersion": 1,
       "position": [
-        -1200,
-        1700
+        -2160,
+        340
       ]
     },
     {
@@ -132,10 +133,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 1,
       "position": [
-        660,
-        1600
+        -300,
+        240
       ],
-      "id": "b861c473-ea12-4011-860f-f7e9bc1a1eef"
+      "id": "a9f6fbe4-0058-42ea-adc8-155007cd21ec"
     },
     {
       "parameters": {
@@ -155,10 +156,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 2,
       "position": [
-        -680,
-        1680
+        -1640,
+        320
       ],
-      "id": "61eb093e-b6b0-4778-9f01-d54a64c159ab",
+      "id": "40617712-1014-437a-bdc1-cff8d0ba2f92",
       "notes": "Important to use \"source_id\" to respond messages"
     },
     {
@@ -176,23 +177,23 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        260,
-        1600
+        -700,
+        240
       ],
       "alwaysOutputData": false,
-      "id": "b257c42b-fb88-4b01-884e-a5314681fd8f"
+      "id": "7ca927f3-4128-44bf-b438-626f2d8a67b9"
     },
     {
       "parameters": {
         "mode": "multiplex"
       },
-      "id": "b6752317-372a-4688-880b-6f9cff5c54bf",
+      "id": "a02cb727-3e4c-4e42-9716-5005473f8aab",
       "name": "Merge Extra + Greeting Content",
       "type": "n8n-nodes-base.merge",
       "typeVersion": 1,
       "position": [
-        860,
-        1520
+        -100,
+        160
       ]
     },
     {
@@ -201,50 +202,50 @@
         "combinationMode": "multiplex",
         "options": {}
       },
-      "id": "6f6a79d1-9e98-404d-b1dd-646eddb32e9a",
+      "id": "1b4db2b0-b206-4747-834e-3f08244017d7",
       "name": "Merge",
       "type": "n8n-nodes-base.merge",
       "typeVersion": 2,
       "position": [
-        -480,
-        1580
+        -1440,
+        220
       ]
     },
     {
       "parameters": {},
-      "id": "ec5af05e-1a59-4bc4-96cc-94a615730fbb",
+      "id": "0ec79f26-26c2-402d-82c9-0e55351d81dd",
       "name": "Waiting for inbox info",
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        -680,
-        1500
+        -1640,
+        140
       ]
     },
     {
       "parameters": {
         "errorMessage": "no chat id"
       },
-      "id": "9fbbfc4a-f077-4a53-be2d-46cbaace6d7b",
+      "id": "67c94092-6344-4f5f-a4c9-55c66bba0967",
       "name": "S&E - No Chat Id",
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        -680,
-        1900
+        -1640,
+        540
       ]
     },
     {
       "parameters": {
         "jsCode": "// Loop over input items and add a new field\n// called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  let value = item.json.content;\n  if (typeof value === 'string') {\n    value = value.replace(/\\*\\*/g,'*');\n    value = value.replace(/\\\\\\s/g,'\\r');\n  }\n  item.json.content = value;\n}\n\nreturn $input.all();"
       },
-      "id": "060a2899-c439-438c-a4df-7eaa8ac617f0",
+      "id": "e4e81ea0-a99b-43cb-b93e-4c571875057b",
       "name": "Text Enchanted adjusts",
       "type": "n8n-nodes-base.code",
       "typeVersion": 1,
       "position": [
-        1060,
-        1520
+        100,
+        160
       ]
     },
     {
@@ -258,26 +259,26 @@
           ]
         }
       },
-      "id": "95940920-c2b8-4d6d-8495-1dce5b0e3204",
+      "id": "71ba2bae-dcb9-411d-8bd6-3761c2a2e278",
       "name": "Skip Greetings By Contact",
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        460,
-        1480
+        -500,
+        120
       ]
     },
     {
       "parameters": {
         "jsCode": "// Loop over input items and add a new field\n// called 'myNewField' to the JSON of each one\nfor (const dados of $input.all()) {\n  \n  //HugoSampaio: Ajuda a analisar problemas de timezone nao configurado\n  dados.json.horaAtual = $now.toFormat('H');\n  \n  for(let wo of dados.json[\"working_hours\"] ){\n    if ($today.weekday === wo.day_of_week){\n      if(wo.closed_all_day == true){\n        dados.json.sendOutofOfficeMessage = true;\n        break;\n      }\n  \n      \n      // opcional: hora do almoco\n      if($now.toFormat('H') == \"12\"){\n        dados.json.sendOutofOfficeMessage = true;\n        break;\n      }\n  \n  \n      if(wo.open_all_day == false){\n  \n        \n        if($now.toFormat('H') <= wo.open_hour  || $now.toFormat('H') >= wo.close_hour){\n          \n          // abertura\n          if($now.toFormat('H') == wo.open_hour){\n            if($now.toFormat('mm') < wo.open_minutes){\n              dados.json.sendOutofOfficeMessage = true;\n              break;\n            }else{\n              dados.json.sendOutofOfficeMessage = false;\n              break;\n            }\n          }\n          \n  \n          // fechamento\n          if($now.toFormat('H') == wo.close_hour){\n            if($now.toFormat('mm') >= wo.close_minutes){\n              dados.json.sendOutofOfficeMessage = true;\n              break;\n            }else{\n              dados.json.sendOutofOfficeMessage = false;\n              break;\n            }\n          }\n  \n          dados.json.sendOutofOfficeMessage = true;\n          break;\n         \n        }    \n      }\n    }\n  }\n}\n\nreturn $input.all();"
       },
-      "id": "1dc477a2-1937-4be8-83c8-eb44b5e49857",
+      "id": "a6417862-e6db-4285-b048-da076e66440b",
       "name": "Calculate Working Hours",
       "type": "n8n-nodes-base.code",
       "typeVersion": 1,
       "position": [
-        -120,
-        1480
+        -1080,
+        120
       ]
     },
     {
@@ -285,13 +286,13 @@
         "respondWith": "noData",
         "options": {}
       },
-      "id": "801537bf-0baa-4b46-9e65-3f3df78954cc",
+      "id": "8df54575-f43e-49ec-881d-567dce876da8",
       "name": "Normal Exit (GNF)",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
       "position": [
-        660,
-        1380
+        -300,
+        20
       ]
     },
     {
@@ -309,11 +310,11 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        -320,
-        1580
+        -1280,
+        220
       ],
       "alwaysOutputData": false,
-      "id": "7d0e7201-e31a-4c5d-b63b-233d1a3c7f6e"
+      "id": "c33b5cd8-3ad1-43cf-b822-fa7ef6a2512e"
     },
     {
       "parameters": {
@@ -330,11 +331,11 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        60,
-        1480
+        -900,
+        120
       ],
       "alwaysOutputData": false,
-      "id": "ebb1c83e-663c-44f0-88a2-07e163037874"
+      "id": "07a1affe-c9e9-4bd6-b99a-10d04ce44be6"
     }
   ],
   "pinData": {},
@@ -541,10 +542,10 @@
   },
   "active": false,
   "settings": {},
-  "versionId": "fc827135-f5ad-476a-9816-7244448e0ad0",
+  "versionId": "2cf5b157-f77f-424f-baa5-d6658293c5b4",
   "id": "4",
   "meta": {
-    "instanceId": "a37a29af0b164c10f8b7ef0e4d5577d19b80c64c836f6cd90dd302c84a178489"
+    "instanceId": "2b4ab318d4f8eba20155e50db9998481bc305e3588e42ee69176091736c9d07e"
   },
   "tags": []
 }
