@@ -270,7 +270,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Loop over input items and add a new field\n// called 'myNewField' to the JSON of each one\nfor (const dados of $input.all()) {\n  \n  //HugoSampaio: Ajuda a analisar problemas de timezone nao configurado\n  dados.json.horaAtual = $now.toFormat('H');\n  \n  for(let wo of dados.json[\"working_hours\"] ){\n    if ($today.weekday === wo.day_of_week){\n      if(wo.closed_all_day == true){\n        dados.json.sendOutofOfficeMessage = true;\n        break;\n      }\n  \n      \n      // opcional: hora do almoco\n      if($now.toFormat('H') == \"12\"){\n        dados.json.sendOutofOfficeMessage = true;\n        break;\n      }\n  \n  \n      if(wo.open_all_day == false){\n  \n        \n        if($now.toFormat('H') <= wo.open_hour  || $now.toFormat('H') >= wo.close_hour){\n          \n          // abertura\n          if($now.toFormat('H') == wo.open_hour){\n            if($now.toFormat('mm') < wo.open_minutes){\n              dados.json.sendOutofOfficeMessage = true;\n              break;\n            }else{\n              dados.json.sendOutofOfficeMessage = false;\n              break;\n            }\n          }\n          \n  \n          // fechamento\n          if($now.toFormat('H') == wo.close_hour){\n            if($now.toFormat('mm') >= wo.close_minutes){\n              dados.json.sendOutofOfficeMessage = true;\n              break;\n            }else{\n              dados.json.sendOutofOfficeMessage = false;\n              break;\n            }\n          }\n  \n          dados.json.sendOutofOfficeMessage = true;\n          break;\n         \n        }    \n      }\n    }\n  }\n}\n\nreturn $input.all();"
+        "jsCode": "// Loop over input items and add a new field\n// called 'myNewField' to the JSON of each one\nfor (const dados of $input.all()) {\n  \n  //HugoSampaio: Ajuda a analisar problemas de timezone nao configurado\n  dados.json.horaAtual = $now.toFormat('H');\n  \n  for(let wo of dados.json[\"working_hours\"] ){\n    if ($today.weekday === wo.day_of_week){\n      if(wo.closed_all_day == true){\n        dados.json.sendOutofOfficeMessage = true;\n        break;\n      }\n  \n      if(wo.open_all_day == false){  \n        \n        if($now.toFormat('H') <= wo.open_hour  || $now.toFormat('H') >= wo.close_hour){\n          \n          // abertura\n          if($now.toFormat('H') == wo.open_hour){\n            if($now.toFormat('mm') < wo.open_minutes){\n              dados.json.sendOutofOfficeMessage = true;\n              break;\n            }else{\n              dados.json.sendOutofOfficeMessage = false;\n              break;\n            }\n          }\n          \n  \n          // fechamento\n          if($now.toFormat('H') == wo.close_hour){\n            if($now.toFormat('mm') >= wo.close_minutes){\n              dados.json.sendOutofOfficeMessage = true;\n              break;\n            }else{\n              dados.json.sendOutofOfficeMessage = false;\n              break;\n            }\n          }\n  \n          dados.json.sendOutofOfficeMessage = true;\n          break;\n         \n        }    \n      }\n    }\n  }\n}\n\nreturn $input.all();"
       },
       "id": "a6417862-e6db-4285-b048-da076e66440b",
       "name": "Calculate Working Hours",
@@ -542,7 +542,7 @@
   },
   "active": false,
   "settings": {},
-  "versionId": "2cf5b157-f77f-424f-baa5-d6658293c5b4",
+  "versionId": "d6eea0b7-aabd-46af-85f0-0e8f60ee069d",
   "id": "4",
   "meta": {
     "instanceId": "2b4ab318d4f8eba20155e50db9998481bc305e3588e42ee69176091736c9d07e"
