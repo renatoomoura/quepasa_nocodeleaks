@@ -223,7 +223,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "=INSERT INTO \"custom_attribute_definitions\" (\"attribute_display_name\", \"attribute_key\", \"attribute_display_type\", \"attribute_model\", \"account_id\", \"attribute_description\", \"attribute_values\", \"updated_at\", \"created_at\") VALUES ('Skip Evaluation', 'skipevaluation', 7, 1, {{ $json.account }}, 'Não utilizar a saudação programada para este contato', '[]', NOW(), NOW());",
+        "query": "=INSERT INTO \"custom_attribute_definitions\" (\"attribute_display_name\", \"attribute_key\", \"attribute_display_type\", \"attribute_model\", \"account_id\", \"attribute_description\", \"attribute_values\", \"updated_at\", \"created_at\") VALUES ('Skip Evaluation', 'skipevaluation', 7, 1, {{ $json.account }}, 'Não utilizar sistema de avaliação ou protocolo para este contato !', '[]', NOW(), NOW());",
         "additionalFields": {}
       },
       "id": "efd2d67c-4a32-4fd4-aea0-b216b59739a9",
@@ -269,7 +269,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "=INSERT INTO \"custom_attribute_definitions\" (\"attribute_display_name\", \"attribute_key\", \"attribute_display_type\", \"attribute_model\", \"account_id\", \"attribute_description\", \"attribute_values\", \"updated_at\", \"created_at\") VALUES ('Skip Evaluation', 'skipevaluation', 7, 0, {{ $json.account }}, 'Não utilizar a saudação programada para este contato', '[]', NOW(), NOW());",
+        "query": "=INSERT INTO \"custom_attribute_definitions\" (\"attribute_display_name\", \"attribute_key\", \"attribute_display_type\", \"attribute_model\", \"account_id\", \"attribute_description\", \"attribute_values\", \"updated_at\", \"created_at\") VALUES ('Skip Evaluation', 'skipevaluation', 7, 0, {{ $json.account }}, 'Não utilizar sistema de avaliação ou protocolo para esta conversa !', '[]', NOW(), NOW());",
         "additionalFields": {}
       },
       "id": "35fe92f8-d6aa-4960-b525-dcb481353e5f",
@@ -398,7 +398,7 @@
   },
   "active": false,
   "settings": {},
-  "versionId": "ba35a291-5057-40b8-b198-f3cba765122f",
+  "versionId": "e3f20b89-64e6-4476-9dc1-553917a3761f",
   "id": "12",
   "meta": {
     "instanceId": "2b4ab318d4f8eba20155e50db9998481bc305e3588e42ee69176091736c9d07e"
