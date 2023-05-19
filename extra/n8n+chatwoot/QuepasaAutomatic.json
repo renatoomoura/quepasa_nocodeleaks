@@ -7,13 +7,13 @@
         "query": "=INSERT INTO \"contacts\" (\"name\", \"identifier\", \"account_id\", \"created_at\", \"updated_at\", \"last_activity_at\") VALUES ('Quepasa Control', 'control@quepasa.io', {{ $json.account }}, NOW(), NOW(), NOW());",
         "additionalFields": {}
       },
-      "id": "c3ccf080-3a49-452d-863a-c0fcbae68213",
+      "id": "9ae73ae2-b057-42ab-aec2-2eb07432b666",
       "name": "Cria o Contato",
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 1,
       "position": [
-        1000,
-        580
+        700,
+        660
       ],
       "alwaysOutputData": false,
       "credentials": {
@@ -30,13 +30,13 @@
         "query": "=INSERT INTO \"automation_rules\" (\"account_id\", \"name\", \"description\", \"event_name\", \"conditions\", \"actions\", \"created_at\", \"updated_at\", \"active\") VALUES ({{ $json.account }}, 'Start Quepasa', 'Start Quepasa', 'message_created', \n\n'[{\"values\": [\"control@quepasa.io\"], \"attribute_key\": \"identifier\", \"query_operator\": \"and\", \"filter_operator\": \"equal_to\", \"custom_attribute_type\": \"\"}, {\"values\": [\"outgoing\"], \"attribute_key\": \"message_type\", \"query_operator\": \"and\", \"filter_operator\": \"equal_to\", \"custom_attribute_type\": \"\"}, {\"values\": [\"/qrcode\"], \"attribute_key\": \"content\", \"filter_operator\": \"contains\", \"custom_attribute_type\": \"\"}]'\n\n, '[{\"action_name\": \"send_webhook_event\", \"action_params\": [\"{{ $node[\"Colocar Dados\"].json[\"URL N8N\"] }}/webhook/quepasa\"]}]', NOW(), NOW(), 'true');",
         "additionalFields": {}
       },
-      "id": "49323e08-10b6-401a-9f12-5e0074877a7e",
+      "id": "e1822cbf-efbc-47dd-8ad7-afa92d4c3b85",
       "name": "Cria Automação",
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 1,
       "position": [
-        1000,
-        380
+        700,
+        460
       ],
       "alwaysOutputData": false,
       "notesInFlow": false,
@@ -54,13 +54,13 @@
         "query": "=SELECT \"accounts\".\"id\" AS \"account\" FROM \"accounts\" LEFT JOIN \"automation_rules\" ON \"accounts\".\"id\" = \"automation_rules\".\"account_id\" AND \"automation_rules\".\"name\" = 'Start Quepasa' WHERE \"automation_rules\".\"name\" IS NULL;",
         "additionalFields": {}
       },
-      "id": "5d6485c3-364f-486b-935f-ee4a349bb1c7",
+      "id": "2a75e8f4-7539-4d0a-88e2-561d0deabac7",
       "name": "Missing Automations",
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 1,
       "position": [
-        760,
-        380
+        460,
+        460
       ],
       "alwaysOutputData": false,
       "credentials": {
@@ -77,13 +77,13 @@
         "query": "=SELECT \"accounts\".\"id\" AS \"account\" FROM \"accounts\" LEFT JOIN \"contacts\" ON \"accounts\".\"id\" = \"contacts\".\"account_id\" AND \"contacts\".\"identifier\" = 'control@quepasa.io' WHERE \"contacts\".\"identifier\" IS NULL;",
         "additionalFields": {}
       },
-      "id": "d6f3a0c7-bd74-4bae-b9fb-d348b4062d0f",
+      "id": "fb3f0031-6bca-4ef2-b154-3c02bb575e84",
       "name": "Missing Quepasa Contact",
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 1,
       "position": [
-        760,
-        580
+        460,
+        660
       ],
       "alwaysOutputData": false,
       "credentials": {
@@ -106,13 +106,13 @@
         },
         "options": {}
       },
-      "id": "2ea7a326-7498-49e1-b8aa-5b410c7af460",
+      "id": "cc3544d1-6ab9-49b3-a456-88c2ab01897c",
       "name": "Colocar Dados",
       "type": "n8n-nodes-base.set",
       "typeVersion": 2,
       "position": [
-        460,
-        480
+        160,
+        560
       ]
     },
     {
@@ -121,13 +121,13 @@
         "query": "=SELECT DISTINCT \"accounts\".\"id\" AS \"account\" FROM \"accounts\" WHERE NOT EXISTS (SELECT NULL FROM \"custom_attribute_definitions\" WHERE \"account_id\" = \"accounts\".\"id\" AND \"attribute_key\" = 'skipgreetings' AND \"attribute_model\" = 1);",
         "additionalFields": {}
       },
-      "id": "592cee8d-6a0f-41d6-a9fc-651752f6ec22",
+      "id": "f961e1b4-0cd9-4052-8ae1-3d8aface8820",
       "name": "Missing Greetings For Contact",
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 1,
       "position": [
-        760,
-        820
+        460,
+        900
       ],
       "alwaysOutputData": false,
       "credentials": {
@@ -144,13 +144,13 @@
         "query": "=INSERT INTO \"custom_attribute_definitions\" (\"attribute_display_name\", \"attribute_key\", \"attribute_display_type\", \"attribute_model\", \"account_id\", \"attribute_description\", \"attribute_values\", \"updated_at\", \"created_at\") VALUES ('Skip Greetings', 'skipgreetings', 7, 1, {{ $json.account }}, 'Não utilizar a saudação programada para este contato', '[]', NOW(), NOW());",
         "additionalFields": {}
       },
-      "id": "09cb634c-42da-481a-b32f-450d1482cda6",
+      "id": "43dacfa8-f16b-4a9f-99ce-4a16471f24df",
       "name": "Insert Skip Greetings Attribute",
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 1,
       "position": [
-        1000,
-        820
+        700,
+        900
       ],
       "alwaysOutputData": false,
       "credentials": {
@@ -169,13 +169,13 @@
           ]
         }
       },
-      "id": "e98726c9-e5f4-486d-9ee5-7d1bf285bcc8",
+      "id": "1566ac58-35b2-4505-9d31-adba3ccb9cc3",
       "name": "Schedule Daily",
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1,
       "position": [
-        400,
-        1020
+        100,
+        1100
       ]
     },
     {
@@ -188,13 +188,13 @@
           ]
         }
       },
-      "id": "8ffb234d-7ed3-40ff-9618-90ea18c2616f",
+      "id": "4dfd2f99-9053-42f1-8c6e-8e0426fb843a",
       "name": "Schedule By 30 Seconds",
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1,
       "position": [
-        240,
-        480
+        -60,
+        560
       ]
     },
     {
@@ -203,13 +203,13 @@
         "query": "=SELECT DISTINCT \"accounts\".\"id\" AS \"account\" FROM \"accounts\" WHERE NOT EXISTS (SELECT NULL FROM \"custom_attribute_definitions\" WHERE \"account_id\" = \"accounts\".\"id\" AND \"attribute_key\" = 'skipevaluation' AND \"attribute_model\" = 1);",
         "additionalFields": {}
       },
-      "id": "a70a3bab-21dc-414b-88aa-064f65d78d63",
+      "id": "cf25755f-6580-41f2-814c-79a3e4f7202f",
       "name": "Missing Evaluation For Contact",
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 1,
       "position": [
-        760,
-        1020
+        460,
+        1100
       ],
       "alwaysOutputData": false,
       "credentials": {
@@ -223,16 +223,16 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "=INSERT INTO \"custom_attribute_definitions\" (\"attribute_display_name\", \"attribute_key\", \"attribute_display_type\", \"attribute_model\", \"account_id\", \"attribute_description\", \"attribute_values\", \"updated_at\", \"created_at\") VALUES ('Skip Greetings', 'skipevaluation', 7, 1, {{ $json.account }}, 'Não utilizar a saudação programada para este contato', '[]', NOW(), NOW());",
+        "query": "=INSERT INTO \"custom_attribute_definitions\" (\"attribute_display_name\", \"attribute_key\", \"attribute_display_type\", \"attribute_model\", \"account_id\", \"attribute_description\", \"attribute_values\", \"updated_at\", \"created_at\") VALUES ('Skip Evaluation', 'skipevaluation', 7, 1, {{ $json.account }}, 'Não utilizar a saudação programada para este contato', '[]', NOW(), NOW());",
         "additionalFields": {}
       },
-      "id": "7c0dde50-05f2-433c-8d3e-cbf738eaedbf",
+      "id": "efd2d67c-4a32-4fd4-aea0-b216b59739a9",
       "name": "Insert Skip Evaluation For Contact Attribute",
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 1,
       "position": [
-        1000,
-        1020
+        700,
+        1100
       ],
       "alwaysOutputData": false,
       "credentials": {
@@ -249,13 +249,13 @@
         "query": "=SELECT DISTINCT \"accounts\".\"id\" AS \"account\" FROM \"accounts\" WHERE NOT EXISTS (SELECT NULL FROM \"custom_attribute_definitions\" WHERE \"account_id\" = \"accounts\".\"id\" AND \"attribute_key\" = 'skipevaluation' AND \"attribute_model\" = 0);",
         "additionalFields": {}
       },
-      "id": "8143af9e-128c-40cb-b6ec-2d29edf9b52f",
+      "id": "65aa9347-77a6-4ea6-8965-caf81a419901",
       "name": "Missing Evaluation For Conversation",
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 1,
       "position": [
-        760,
-        1220
+        460,
+        1300
       ],
       "alwaysOutputData": false,
       "credentials": {
@@ -269,16 +269,16 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "=INSERT INTO \"custom_attribute_definitions\" (\"attribute_display_name\", \"attribute_key\", \"attribute_display_type\", \"attribute_model\", \"account_id\", \"attribute_description\", \"attribute_values\", \"updated_at\", \"created_at\") VALUES ('Skip Greetings', 'skipevaluation', 7, 0, {{ $json.account }}, 'Não utilizar a saudação programada para este contato', '[]', NOW(), NOW());",
+        "query": "=INSERT INTO \"custom_attribute_definitions\" (\"attribute_display_name\", \"attribute_key\", \"attribute_display_type\", \"attribute_model\", \"account_id\", \"attribute_description\", \"attribute_values\", \"updated_at\", \"created_at\") VALUES ('Skip Evaluation', 'skipevaluation', 7, 0, {{ $json.account }}, 'Não utilizar a saudação programada para este contato', '[]', NOW(), NOW());",
         "additionalFields": {}
       },
-      "id": "e820cf22-4afa-42e5-9cc4-4e11d807f974",
+      "id": "35fe92f8-d6aa-4960-b525-dcb481353e5f",
       "name": "Insert Skip Evaluation For Conversation Attribute",
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 1,
       "position": [
-        1000,
-        1220
+        700,
+        1300
       ],
       "alwaysOutputData": false,
       "credentials": {
@@ -396,36 +396,36 @@
       ]
     }
   },
-  "active": true,
+  "active": false,
   "settings": {},
-  "versionId": "21201442-a59d-4e77-8edf-5aee04083ffa",
-  "id": "1",
+  "versionId": "ba35a291-5057-40b8-b198-f3cba765122f",
+  "id": "12",
   "meta": {
-    "instanceId": "a37a29af0b164c10f8b7ef0e4d5577d19b80c64c836f6cd90dd302c84a178489"
+    "instanceId": "2b4ab318d4f8eba20155e50db9998481bc305e3588e42ee69176091736c9d07e"
   },
   "tags": [
     {
-      "createdAt": "2023-04-22T16:05:34.666Z",
-      "updatedAt": "2023-04-22T16:05:34.666Z",
+      "createdAt": "2022-10-13T04:02:06.783Z",
+      "updatedAt": "2022-10-13T04:02:06.783Z",
       "id": "1",
-      "name": "EngajamentoFlow"
-    },
-    {
-      "createdAt": "2023-04-22T16:05:34.674Z",
-      "updatedAt": "2023-04-22T16:05:34.674Z",
-      "id": "2",
-      "name": "QUEPASA"
-    },
-    {
-      "createdAt": "2023-04-22T16:05:34.697Z",
-      "updatedAt": "2023-04-22T16:05:34.697Z",
-      "id": "3",
       "name": "SUFFICIT"
     },
     {
-      "createdAt": "2023-04-22T16:05:34.703Z",
-      "updatedAt": "2023-04-22T16:05:34.703Z",
-      "id": "4",
+      "createdAt": "2022-10-13T15:26:11.519Z",
+      "updatedAt": "2022-10-13T15:26:11.519Z",
+      "id": "5",
+      "name": "QUEPASA"
+    },
+    {
+      "createdAt": "2023-05-18T18:59:53.449Z",
+      "updatedAt": "2023-05-18T18:59:53.449Z",
+      "id": "7",
+      "name": "EngajamentoFlow"
+    },
+    {
+      "createdAt": "2023-05-18T18:59:53.482Z",
+      "updatedAt": "2023-05-18T18:59:53.482Z",
+      "id": "8",
       "name": "Versão 2.0"
     }
   ]
