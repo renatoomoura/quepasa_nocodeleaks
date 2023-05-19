@@ -615,7 +615,7 @@
             },
             {
               "name": "query.account",
-              "value": "={{ $json.query.account ?? $json.body.account_id ?? $json.body.account?.id }}"
+              "value": "={{ $json.query.account ?? $json.body.account_id ?? $json.body.account?.id ?? $json.body.messages[0]?.account_id }}"
             }
           ]
         },
@@ -1652,7 +1652,7 @@
   },
   "active": true,
   "settings": {},
-  "versionId": "8fe5f424-ff19-406e-8755-0c5a93298049",
+  "versionId": "0e891f22-39e9-470a-baaa-54865917ca21",
   "id": "2",
   "meta": {
     "instanceId": "2b4ab318d4f8eba20155e50db9998481bc305e3588e42ee69176091736c9d07e"
