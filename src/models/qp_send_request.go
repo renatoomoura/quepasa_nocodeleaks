@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"strings"
 
-	log "github.com/sirupsen/logrus"
 	library "github.com/nocodeleaks/quepasa/library"
 	whatsapp "github.com/nocodeleaks/quepasa/whatsapp"
+	log "github.com/sirupsen/logrus"
 )
 
 type QpSendRequest struct {
@@ -86,6 +86,8 @@ func (source *QpSendRequest) ToWhatsappAttachment() (attach *whatsapp.WhatsappAt
 	// adjusting codec for ptt audio messages
 	if strings.Contains(mimeType, "ogg") && !strings.Contains(mimeType, "opus") {
 		mimeType = "audio/ogg; codecs=opus"
+	} else if strings.Contains(mimeType, "wave") && !strings.Contains(mimeType, "opus") {
+		mimeType = "audio/wave; codecs=opus"
 	}
 
 	log.Tracef("detected mime type: %s, filename: %s", mimeType, source.FileName)
