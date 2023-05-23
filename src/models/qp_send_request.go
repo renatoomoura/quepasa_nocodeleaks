@@ -84,9 +84,8 @@ func (source *QpSendRequest) ToWhatsappAttachment() (attach *whatsapp.WhatsappAt
 	mimeType := library.GetMimeTypeFromContent(source.Content, source.FileName)
 
 	// adjusting codec for ptt audio messages
-	if strings.Contains(mimeType, "ogg") && !strings.Contains(mimeType, "opus") {
-		mimeType = "audio/ogg; codecs=opus"
-	} else if strings.Contains(mimeType, "wave") && !strings.Contains(mimeType, "opus") {
+	// inserting a trick for change from wave to ogg ... insecure
+	if (strings.Contains(mimeType, "ogg") || strings.Contains(mimeType, "wave")) && !strings.Contains(mimeType, "opus") {
 		mimeType = "audio/ogg; codecs=opus"
 	}
 
