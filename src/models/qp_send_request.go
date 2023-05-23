@@ -87,7 +87,7 @@ func (source *QpSendRequest) ToWhatsappAttachment() (attach *whatsapp.WhatsappAt
 	if strings.Contains(mimeType, "ogg") && !strings.Contains(mimeType, "opus") {
 		mimeType = "audio/ogg; codecs=opus"
 	} else if strings.Contains(mimeType, "wave") && !strings.Contains(mimeType, "opus") {
-		mimeType = "audio/wave; codecs=opus"
+		mimeType = "audio/ogg; codecs=opus"
 	}
 
 	log.Tracef("detected mime type: %s, filename: %s", mimeType, source.FileName)
