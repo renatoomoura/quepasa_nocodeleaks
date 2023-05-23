@@ -145,6 +145,8 @@ func (handler *WhatsmeowHandlers) Message(evt events.Message) {
 		participantID := fmt.Sprint(evt.Info.Sender.User, "@", evt.Info.Sender.Server)
 		message.Participant.Id = participantID
 		message.Participant.Title = GetChatTitle(handler.Client, evt.Info.Sender)
+
+		// sugested by hugo sampaio, removing message.FromMe
 		if len(message.Participant.Title) == 0 {
 			message.Participant.Title = evt.Info.PushName
 		}
