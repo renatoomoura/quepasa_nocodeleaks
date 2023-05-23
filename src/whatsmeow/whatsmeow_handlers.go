@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"reflect"
 
-	log "github.com/sirupsen/logrus"
 	whatsapp "github.com/nocodeleaks/quepasa/whatsapp"
+	log "github.com/sirupsen/logrus"
 	whatsmeow "go.mau.fi/whatsmeow"
 	types "go.mau.fi/whatsmeow/types"
 	"go.mau.fi/whatsmeow/types/events"
@@ -145,7 +145,7 @@ func (handler *WhatsmeowHandlers) Message(evt events.Message) {
 		participantID := fmt.Sprint(evt.Info.Sender.User, "@", evt.Info.Sender.Server)
 		message.Participant.Id = participantID
 		message.Participant.Title = GetChatTitle(handler.Client, evt.Info.Sender)
-		if len(message.Participant.Title) == 0 && message.FromMe {
+		if len(message.Participant.Title) == 0 {
 			message.Participant.Title = evt.Info.PushName
 		}
 	} else {
