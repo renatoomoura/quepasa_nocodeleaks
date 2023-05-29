@@ -221,33 +221,6 @@
     },
     {
       "parameters": {
-        "conditions": {
-          "string": [
-            {
-              "value1": "={{$json[\"body\"][\"meta\"][\"sender\"][\"name\"].toLowerCase()}}",
-              "operation": "contains",
-              "value2": "quepasa control"
-            },
-            {
-              "value1": "={{$json[\"body\"][\"conversation\"][\"meta\"][\"sender\"][\"name\"].toLowerCase()}}",
-              "operation": "contains",
-              "value2": "quepasa control"
-            }
-          ]
-        },
-        "combineOperation": "any"
-      },
-      "id": "1c6cef50-944c-4385-ba1b-737d6c708a55",
-      "name": "IF",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 1,
-      "position": [
-        -1300,
-        2700
-      ]
-    },
-    {
-      "parameters": {
         "respondWith": "noData",
         "options": {}
       },
@@ -1055,6 +1028,37 @@
         -1000,
         2720
       ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.body.conversation?.meta.sender.identifier?.toLowerCase() }}",
+              "value2": "control@quepasa.io"
+            },
+            {
+              "value1": "={{ $json.body.meta?.sender.name?.toLowerCase() }}",
+              "operation": "contains",
+              "value2": "quepasa control"
+            },
+            {
+              "value1": "={{ $json.body.conversation?.meta.sender.name?.toLowerCase() }}",
+              "operation": "contains",
+              "value2": "quepasa control"
+            }
+          ]
+        },
+        "combineOperation": "any"
+      },
+      "id": "1c6cef50-944c-4385-ba1b-737d6c708a55",
+      "name": "From Quepasa Control ?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -1300,
+        2700
+      ]
     }
   ],
   "pinData": {},
@@ -1175,24 +1179,6 @@
         ]
       ]
     },
-    "IF": {
-      "main": [
-        [
-          {
-            "node": "Throw To Quepasa Inbox Control Workflow",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Payload",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Text Only ?": {
       "main": [
         [
@@ -1251,7 +1237,7 @@
       "main": [
         [
           {
-            "node": "IF",
+            "node": "From Quepasa Control ?",
             "type": "main",
             "index": 0
           }
@@ -1648,11 +1634,29 @@
           }
         ]
       ]
+    },
+    "From Quepasa Control ?": {
+      "main": [
+        [
+          {
+            "node": "Throw To Quepasa Inbox Control Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": true,
   "settings": {},
-  "versionId": "0e891f22-39e9-470a-baaa-54865917ca21",
+  "versionId": "3f1de8a2-5120-4b9e-843f-749d8421f069",
   "id": "2",
   "meta": {
     "instanceId": "2b4ab318d4f8eba20155e50db9998481bc305e3588e42ee69176091736c9d07e"
