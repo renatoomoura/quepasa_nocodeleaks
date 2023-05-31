@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"strings"
 
 	_ "github.com/mattn/go-sqlite3"
 	log "github.com/sirupsen/logrus"
@@ -45,8 +46,12 @@ func (service *WhatsmeowServiceModel) Start() {
 		WhatsmeowService = &WhatsmeowServiceModel{Container: container}
 
 		showing := whatsapp.WhatsappWebAppName
-		if len(whatsapp.WhatsappWebAppSystem) > 0 {
-			showing += " " + whatsapp.WhatsappWebAppSystem
+
+		// trim spaces from app name previous setted, if exists
+		previousShowing := strings.TrimSpace(whatsapp.WhatsappWebAppSystem)
+		if len(previousShowing) > 0 {
+			// using previous setted name
+			showing = previousShowing
 		}
 
 		var version [3]uint32
