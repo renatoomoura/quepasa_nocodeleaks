@@ -125,7 +125,12 @@ func HandleImageMessage(log *log.Entry, out *whatsapp.WhatsappMessage, in *proto
 func HandleStickerMessage(log *log.Entry, out *whatsapp.WhatsappMessage, in *proto.StickerMessage) {
 	log.Debug("Received a image|sticker message !")
 	out.Content = in
-	out.Type = whatsapp.ImageMessageType
+
+	if in.GetIsAnimated() {
+		out.Type = whatsapp.VideoMessageType
+	} else {
+		out.Type = whatsapp.ImageMessageType
+	}
 
 	jpeg := GetStringFromBytes(in.PngThumbnail)
 	out.Attachment = &whatsapp.WhatsappAttachment{
