@@ -16,4 +16,6 @@ type IWhatsappMessage interface {
 
 	// Original message from source service
 	GetSource() interface{}
+
+	GetParticipantId() string
 }

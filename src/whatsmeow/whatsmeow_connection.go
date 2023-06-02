@@ -174,7 +174,7 @@ func (conn *WhatsmeowConnection) Download(imsg whatsapp.IWhatsappMessage, cache 
 	return
 }
 
-func (conn *WhatsmeowConnection) Revoke(msg *whatsapp.WhatsappMessage) error {
+func (conn *WhatsmeowConnection) Revoke(msg whatsapp.IWhatsappMessage) error {
 	jid, err := types.ParseJID(msg.GetChatId())
 	if err != nil {
 		conn.log.Infof("revoke error on get jid: %s", err)
@@ -187,7 +187,7 @@ func (conn *WhatsmeowConnection) Revoke(msg *whatsapp.WhatsappMessage) error {
 		return err
 	}
 
-	newMessage := conn.Client.BuildRevoke(jid, participantJid, msg.Id)
+	newMessage := conn.Client.BuildRevoke(jid, participantJid, msg.GetId())
 	_, err = conn.Client.SendMessage(context.Background(), jid, newMessage)
 	if err != nil {
 		conn.log.Infof("revoke error: %s", err)

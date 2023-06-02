@@ -32,6 +32,9 @@ func RegisterAPIControllers(r chi.Router) {
 		// SENDING MSG ----------------------------
 		// ----------------------------------------
 
+		r.Delete(endpoint+"/message/{messageid}", RevokeController)
+		r.Delete(endpoint+"/message", RevokeController)
+
 		// used to dispatch alert msgs via url, triggers on monitor systems like zabbix
 		r.Get(endpoint+"/send", SendAny)
 

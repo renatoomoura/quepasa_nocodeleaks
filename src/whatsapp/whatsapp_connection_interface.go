@@ -34,10 +34,10 @@ type IWhatsappConnection interface {
 	// Download message attachment if exists and informations
 	Download(IWhatsappMessage, bool) (*WhatsappAttachment, error)
 
+	Revoke(IWhatsappMessage) error
+
 	// Default send message method
 	Send(*WhatsappMessage) (IWhatsappSendResponse, error)
-
-	Revoke(*WhatsappMessage) error
 
 	// Define the log level for this connection
 	UpdateLog(*log.Entry)

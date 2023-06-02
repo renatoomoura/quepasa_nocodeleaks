@@ -119,6 +119,16 @@ func (server *QpWhatsappServer) Download(id string, cache bool) (att *whatsapp.W
 	return
 }
 
+func (server *QpWhatsappServer) Revoke(id string) (err error) {
+	msg, err := server.Handler.GetMessage(id)
+	if err != nil {
+		return
+	}
+
+	server.Log.Infof("revoking msg %s", id)
+	return server.connection.Revoke(&msg)
+}
+
 //endregion
 
 func (server *QpWhatsappServer) GetMessages(timestamp time.Time) (messages []whatsapp.WhatsappMessage) {
