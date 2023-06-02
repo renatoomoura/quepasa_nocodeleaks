@@ -7,8 +7,8 @@ import (
 	"strings"
 
 	slug "github.com/gosimple/slug"
-	log "github.com/sirupsen/logrus"
 	whatsapp "github.com/nocodeleaks/quepasa/whatsapp"
+	log "github.com/sirupsen/logrus"
 	proto "go.mau.fi/whatsmeow/binary/proto"
 )
 

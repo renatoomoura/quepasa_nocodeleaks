@@ -131,7 +131,7 @@ func (conn *WhatsmeowConnection) DownloadData(imsg whatsapp.IWhatsappMessage) (d
 	msg := imsg.GetSource()
 	downloadable, ok := msg.(whatsmeow.DownloadableMessage)
 	if !ok {
-		conn.log.Debug("not downloadable, trying default message")
+		conn.log.Debug("not downloadable type, trying default message")
 		waMsg, ok := msg.(*waProto.Message)
 		if !ok {
 			attach := imsg.GetAttachment()
