@@ -122,7 +122,7 @@ func ShouldUsePtt(Mimetype string) bool {
 }
 
 func GetStringFromBytes(bytes []byte) string {
-	if bytes != nil {
+	if bytes != nil && len(bytes) > 0 {
 		return base64.StdEncoding.EncodeToString(bytes)
 	}
 	return ""
